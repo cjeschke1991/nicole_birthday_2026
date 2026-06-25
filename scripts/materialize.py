@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 """
-Materialize full-resolution print JPEGs for ONLY the photos used in story.json.
+Materialize full-resolution print JPEGs for ONLY the photos used in a version's story.json.
 
-Reads story/story.json + build/manifest.json, finds each chosen photo's original
+Reads versions/{v}/story.json + build/manifest.json, finds each chosen photo's original
 source file, and writes a high-quality, EXIF-rotated, sRGB JPEG to
 photos_processed/<year>/<name>.jpg (the path render.py expects).
 
-This keeps the project small: thousands of photos are indexed as thumbnails, but
-only the ~dozens that make the book are converted to full resolution.
+Version-specific swap photos (under versions/{v}/photos/) are skipped — they are
+already full resolution and resolved first at render time.
 
 Usage:
     python scripts/materialize.py
+    python scripts/materialize.py --version v2
 """
 from __future__ import annotations
 
+import argparse
 import json
+import shutil
 
 from PIL import Image, ImageOps
 
 import common
-from common import MANIFEST_JSON, PHOTOS_PROCESSED, STORY_JSON
+from common import DEFAULT_VERSION, MANIFEST_JSON, PHOTOS_PROCESSED, set_version
 
-# Long-edge cap: 11.25in (shop, with bleed) * 300 DPI = 3375 px.
 MAX_LONG_EDGE = 3400
 JPEG_QUALITY = 88
 
 
-def used_files(story: dict) -> set:
+def used_files(story: dict, version_photos) -> set:
     files = set()
     cover = story.get("book", {}).get("cover")
     if cover:
@@ -35,19 +37,24 @@ def used_files(story: dict) -> set:
         for p in yr.get("photos", []):
             if p.get("file"):
                 files.add(p["file"])
-    return files
+    # Skip paths already provided as version-specific swaps.
+    skip = {rel for rel in files if (version_photos / rel).exists()}
+    return files - skip
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--version", default=DEFAULT_VERSION)
+    args = ap.parse_args()
+
     common.register_heif()
-    if not STORY_JSON.exists():
-        print("No story/story.json. Run scripts/draft_story.py first.")
-        return
+    vp = set_version(args.version)
+
     if not MANIFEST_JSON.exists():
         print("No build/manifest.json. Run scripts/ingest.py first.")
         return
 
-    story = json.loads(STORY_JSON.read_text())
+    story = json.loads(vp.story_json.read_text())
     manifest = json.loads(MANIFEST_JSON.read_text())
 
     src_by_file = {}
@@ -55,15 +62,13 @@ def main() -> None:
         for e in items:
             src_by_file[e["file"]] = e["src"]
 
-    # Clear stale processed output (fully derived from story.json).
-    import shutil
     if PHOTOS_PROCESSED.exists():
         for y in PHOTOS_PROCESSED.iterdir():
             if y.is_dir():
                 shutil.rmtree(y)
 
-    wanted = used_files(story)
-    print(f"Materializing {len(wanted)} photo(s) at print resolution...")
+    wanted = used_files(story, vp.photos)
+    print(f"[{vp.name}] Materializing {len(wanted)} photo(s) at print resolution...")
 
     done, missing = 0, []
     for rel in sorted(wanted):
@@ -85,7 +90,7 @@ def main() -> None:
 
     print(f"  wrote {done} file(s) to photos_processed/")
     if missing:
-        print(f"  WARNING: {len(missing)} not materialized:")
+        print(f"  WARNING: {len(missing)} not materialized (may be version swap photos):")
         for m in missing[:20]:
             print(f"    - {m}")
 

@@ -9,7 +9,7 @@ from __future__ import annotations
 import argparse, json
 from PIL import Image, ImageDraw, ImageFont
 import common
-from common import THUMBS_DIR, STORY_JSON, MANIFEST_JSON
+from common import DEFAULT_VERSION, MANIFEST_JSON, THUMBS_DIR, set_version
 
 CELL = 360
 COLS = 5
@@ -57,8 +57,10 @@ def montage(title, entries, out):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pool", type=int, help="show all tagged candidates for a year")
+    ap.add_argument("--version", default=DEFAULT_VERSION)
     args = ap.parse_args()
-    out_dir = common.BUILD_DIR / "review"
+    vp = set_version(args.version)
+    out_dir = vp.build / "review"
 
     if args.pool:
         manifest = json.loads(MANIFEST_JSON.read_text())
@@ -68,7 +70,7 @@ def main():
                 items, out_dir / f"pool_{args.pool}.jpg")
         return
 
-    story = json.loads(STORY_JSON.read_text())
+    story = json.loads(vp.story_json.read_text())
     for yr in story["years"]:
         montage(f"{yr['year']} — {len(yr['photos'])} selected",
                 yr["photos"], out_dir / f"{yr['year']}.jpg")

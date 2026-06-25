@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-Render story/story.json into print-ready PDFs (warm editorial, 11x8.5 landscape).
+Render versions/{v}/story.json into print-ready PDFs (warm editorial, 11x8.5 landscape).
 
 Produces, from the SAME source:
-  build/Story_of_Us_home.pdf   (borderless-friendly, no bleed)   [--profile home]
-  build/Story_of_Us_shop.pdf   (0.125in bleed + crop marks)      [--profile shop]
+  versions/{v}/build/Story_of_Us_home.pdf   (borderless-friendly, no bleed)
+  versions/{v}/build/Story_of_Us_shop.pdf   (0.125in bleed + crop marks)
 
 Usage:
-    python scripts/render.py                 # both profiles
-    python scripts/render.py --profile home  # just one
-    python scripts/render.py --html-only     # write build/story_<profile>.html, skip PDF
+    python scripts/render.py                      # default version (v1), both profiles
+    python scripts/render.py --version v2
+    python scripts/render.py --profile home
+    python scripts/render.py --html-only
 
 NOTE: PDF rendering launches headless Chromium and must run OUTSIDE the sandbox.
 """
@@ -24,8 +25,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 import common
 from common import (
-    ASSETS_DIR, BUILD_DIR, COVERS_DIR, MANIFEST_JSON, PHOTOS_PROCESSED,
-    PHOTOS_RAW, PLAYWRIGHT_DIR, STORY_JSON, TEMPLATES_DIR, THUMBS_DIR,
+    ASSETS_DIR, DEFAULT_VERSION, PLAYWRIGHT_DIR, VersionPaths,
+    list_versions, resolve_cover, resolve_photo, set_version,
 )
 
 PROFILES = {
@@ -45,7 +46,6 @@ PROFILES = {
     },
 }
 
-# Collage slot presets: (left%, top%, width%, height%, rotationDeg)
 COLLAGE_SLOTS = {
     3: [(5, 8, 46, 58, -2.5), (56, 10, 38, 40, 2.5), (50, 54, 44, 40, -1.5)],
     4: [(4, 6, 44, 46, -2.5), (54, 8, 42, 40, 2.0),
@@ -59,30 +59,28 @@ ROLE_HINTS = {
     "Cooper": "Our Dog", "Zoa": "Our Dog",
 }
 
+_missing_photos: list[str] = []
+
 
 def to_uri(path: Path) -> str:
     return path.resolve().as_uri()
 
 
-def resolve_photo(rel: str) -> Path:
-    """Prefer the full-res materialized JPEG; fall back to the ingest thumbnail
-    (so a proof can render before materialize.py has run)."""
-    full = PHOTOS_PROCESSED / rel
-    if full.exists():
-        return full
-    thumb = THUMBS_DIR / rel
-    if thumb.exists():
-        return thumb
-    return full  # report the expected path if neither exists
+def photo_uri(rel: str, vp: VersionPaths) -> str:
+    path = resolve_photo(rel, vp)
+    if not path.exists():
+        _missing_photos.append(rel)
+    return to_uri(path)
 
 
-def resolve_cover(rel: str) -> Path:
-    """Cover paths like 'covers/clay.jpg' are relative to photos_raw/."""
-    return PHOTOS_RAW / rel
+def cover_uri(rel: str, vp: VersionPaths) -> str:
+    path = resolve_cover(rel, vp)
+    if not path.exists():
+        _missing_photos.append(rel)
+    return to_uri(path)
 
 
 def fmt_date(iso: str) -> str:
-    """'2015-06-14' -> 'June 2015'. Pass through anything unexpected."""
     try:
         from datetime import datetime
         return datetime.strptime(iso, "%Y-%m-%d").strftime("%B %Y")
@@ -90,11 +88,10 @@ def fmt_date(iso: str) -> str:
         return iso or ""
 
 
-def build_pages(story: dict) -> list[dict]:
+def build_pages(story: dict, vp: VersionPaths) -> list[dict]:
     pages: list[dict] = []
     book = story.get("book", {})
 
-    # Cover background: explicit book.cover, else first photo of first year.
     cover_rel = book.get("cover")
     if not cover_rel:
         for y in story.get("years", []):
@@ -107,19 +104,17 @@ def build_pages(story: dict) -> list[dict]:
             "title": book.get("title", "The Story of Us"),
             "subtitle": book.get("subtitle", ""),
             "kicker": book.get("kicker", ""),
-            "bg": to_uri(resolve_photo(cover_rel)),
+            "bg": photo_uri(cover_rel, vp),
         })
 
-    # Dedication
     if book.get("dedication"):
         ded = book["dedication"]
         body, signoff = ded, ""
-        if "—" in ded:  # split trailing "— Clay"
+        if "—" in ded:
             parts = ded.rsplit("—", 1)
             body, signoff = parts[0].strip(), "— " + parts[1].strip()
         pages.append({"type": "dedication", "body": body, "signoff": signoff})
 
-    # Cast
     cast = book.get("cast", [])
     if cast:
         members = []
@@ -127,7 +122,7 @@ def build_pages(story: dict) -> list[dict]:
             members.append({
                 "name": m["name"],
                 "role": m.get("role", ROLE_HINTS.get(m["name"], "")),
-                "img": to_uri(resolve_cover(m["cover"])),
+                "img": cover_uri(m["cover"], vp),
             })
         pages.append({
             "type": "cast",
@@ -136,7 +131,6 @@ def build_pages(story: dict) -> list[dict]:
             "members": members,
         })
 
-    # Years
     for yr in story.get("years", []):
         photos = yr.get("photos", [])
         pages.append({
@@ -144,22 +138,14 @@ def build_pages(story: dict) -> list[dict]:
             "year": yr["year"],
             "title": yr.get("title", ""),
             "intro": yr.get("intro", ""),
-            "accent_img": to_uri(resolve_photo(photos[0]["file"])) if photos else None,
+            "accent_img": photo_uri(photos[0]["file"], vp) if photos else None,
         })
-        pages.extend(layout_year(yr, photos))
+        pages.extend(layout_year(yr, photos, vp))
 
     return pages
 
 
-def layout_year(yr: dict, photos: list[dict]) -> list[dict]:
-    """Turn a year's photos into content pages, honoring per-photo 'layout' hints.
-
-    Grouping rules:
-      - 'hero'  -> its own page
-      - 'full'  -> its own full-bleed page
-      - 'pair'  -> consecutive 'pair' photos grouped 2 per page
-      - 'collage' -> consecutive 'collage' photos grouped 3-5 per page
-    """
+def layout_year(yr: dict, photos: list[dict], vp: VersionPaths) -> list[dict]:
     out: list[dict] = []
     i = 0
     n = len(photos)
@@ -169,13 +155,13 @@ def layout_year(yr: dict, photos: list[dict]) -> list[dict]:
 
         if layout == "hero":
             out.append({"type": "content", "layout": "hero",
-                        "img": to_uri(resolve_photo(p["file"])),
+                        "img": photo_uri(p["file"], vp),
                         "caption": p.get("caption", ""), "date": fmt_date(p.get("date", ""))})
             i += 1
 
         elif layout == "full":
             out.append({"type": "content", "layout": "full",
-                        "img": to_uri(resolve_photo(p["file"])),
+                        "img": photo_uri(p["file"], vp),
                         "caption": p.get("caption", ""), "date": fmt_date(p.get("date", ""))})
             i += 1
 
@@ -183,7 +169,7 @@ def layout_year(yr: dict, photos: list[dict]) -> list[dict]:
             group = []
             while i < n and photos[i].get("layout") == "pair" and len(group) < 2:
                 group.append(photos[i]); i += 1
-            cells = [{"img": to_uri(resolve_photo(g["file"])), "caption": g.get("caption", "")}
+            cells = [{"img": photo_uri(g["file"], vp), "caption": g.get("caption", "")}
                      for g in group]
             out.append({"type": "content", "layout": "pair", "cells": cells})
 
@@ -191,24 +177,24 @@ def layout_year(yr: dict, photos: list[dict]) -> list[dict]:
             group = []
             while i < n and photos[i].get("layout") == "collage" and len(group) < 5:
                 group.append(photos[i]); i += 1
-            out.append(make_collage(yr, group))
+            out.append(make_collage(yr, group, vp))
 
         else:
             out.append({"type": "content", "layout": "hero",
-                        "img": to_uri(resolve_photo(p["file"])),
+                        "img": photo_uri(p["file"], vp),
                         "caption": p.get("caption", ""), "date": fmt_date(p.get("date", ""))})
             i += 1
     return out
 
 
-def make_collage(yr: dict, group: list[dict]) -> dict:
+def make_collage(yr: dict, group: list[dict], vp: VersionPaths) -> dict:
     count = max(3, min(5, len(group)))
     slots = COLLAGE_SLOTS[count]
     shots = []
     for idx, g in enumerate(group[:count]):
         left, top, w, h, rot = slots[idx]
         shots.append({
-            "img": to_uri(resolve_photo(g["file"])),
+            "img": photo_uri(g["file"], vp),
             "caption": g.get("caption", ""),
             "left": f"{left}%", "top": f"{top}%",
             "width": f"{w}%", "height": f"{h}%",
@@ -218,15 +204,24 @@ def make_collage(yr: dict, group: list[dict]) -> dict:
             "year_tag": str(yr.get("year", "")), "shots": shots}
 
 
-def render_html(story: dict, profile: dict) -> str:
+def template_dirs(vp: VersionPaths) -> list[str]:
+    dirs = []
+    if vp.templates.is_dir():
+        dirs.append(str(vp.templates))
+    dirs.append(str(common.TEMPLATES_DIR))
+    return dirs
+
+
+def render_html(story: dict, profile: dict, vp: VersionPaths) -> str:
     env = Environment(
-        loader=FileSystemLoader(str(TEMPLATES_DIR)),
+        loader=FileSystemLoader(template_dirs(vp)),
         autoescape=select_autoescape(["html", "xml"]),
     )
     tmpl = env.get_template("book.html.j2")
-    book_css = (ASSETS_DIR / "css" / "book.css").read_text()
+    css_path = vp.css if vp.css.exists() else ASSETS_DIR / "css" / "book.css"
+    book_css = css_path.read_text()
     flourish = (ASSETS_DIR / "svg" / "flourish.svg").read_text()
-    pages = build_pages(story)
+    pages = build_pages(story, vp)
     return tmpl.render(
         book=story.get("book", {}),
         pages=pages,
@@ -251,36 +246,54 @@ def html_to_pdf(html_path: Path, pdf_path: Path) -> None:
         browser.close()
 
 
-def load_story() -> dict:
-    if not STORY_JSON.exists():
-        print(f"No {STORY_JSON.relative_to(common.ROOT)} found. Run "
-              f"scripts/draft_story.py first (or copy story/story.example.json).")
+def load_story(vp: VersionPaths) -> dict:
+    if not vp.story_json.exists():
+        print(f"No {vp.story_json.relative_to(common.ROOT)} found.")
         sys.exit(1)
-    return json.loads(STORY_JSON.read_text())
+    return json.loads(vp.story_json.read_text())
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--version", default=DEFAULT_VERSION,
+                    help=f"Book version folder (default: {DEFAULT_VERSION})")
     ap.add_argument("--profile", choices=["home", "shop", "both"], default="both")
     ap.add_argument("--html-only", action="store_true")
     args = ap.parse_args()
 
-    common.ensure_dirs()
-    story = load_story()
+    try:
+        vp = set_version(args.version)
+    except FileNotFoundError as e:
+        print(e)
+        if list_versions():
+            print(f"Available: {', '.join(list_versions())}")
+        sys.exit(1)
+
+    common.ensure_dirs(vp.name)
+    story = load_story(vp)
     profiles = ["home", "shop"] if args.profile == "both" else [args.profile]
+
+    global _missing_photos
+    _missing_photos = []
 
     for name in profiles:
         profile = PROFILES[name]
-        html = render_html(story, profile)
-        html_path = BUILD_DIR / f"story_{name}.html"
+        html = render_html(story, profile, vp)
+        html_path = vp.build / f"story_{name}.html"
         html_path.write_text(html)
         print(f"  wrote {html_path.relative_to(common.ROOT)}")
         if not args.html_only:
-            pdf_path = BUILD_DIR / f"Story_of_Us_{name}.pdf"
+            pdf_path = vp.build / f"Story_of_Us_{name}.pdf"
             html_to_pdf(html_path, pdf_path)
             print(f"  wrote {pdf_path.relative_to(common.ROOT)}")
 
-    print("Done.")
+    if _missing_photos:
+        unique = sorted(set(_missing_photos))
+        print(f"\n  WARNING [{vp.name}]: {len(unique)} missing photo(s):")
+        for rel in unique:
+            print(f"    - {rel}")
+
+    print(f"Done ({vp.name}).")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,37 @@
+---
+description: Confirm v1 vs v2 before any book content or design change
+alwaysApply: true
+---
+
+# Book version confirmation (required)
+
+This project has two independent book editions under `versions/v1/` and `versions/v2/`.
+
+## Before making ANY change
+
+When the user asks to edit captions, photos, layouts, CSS, templates, rebuild PDFs, add images, or otherwise modify book content or design:
+
+1. **Stop and ask which version** the change should apply to — **v1** or **v2**.
+2. Do this **even if the user already named a version** in their message. Treat their mention as a hint, not approval.
+3. Use the **AskQuestion** tool when available. Otherwise ask in plain text with two clear options:
+   - **v1** — finished gift edition (frozen baseline; change only when intentional)
+   - **v2** — experimental redesign (safe to iterate)
+4. **Do not edit files, run builds, or copy assets** until the user confirms.
+
+## After confirmation
+
+- Edit only paths under `versions/{confirmed}/` (e.g. `story.json`, `assets/css/book.css`, `photos/`).
+- Run render/build with `--version {confirmed}` or `bash scripts/build_book.sh {confirmed}`.
+- Never apply the same content edit to both versions unless the user explicitly asks for both.
+
+## Exceptions (no confirmation needed)
+
+- Read-only questions (how to open a PDF, explain structure, review without editing)
+- Changes to shared infrastructure that are not version-specific (`scripts/`, root `README.md`, ingest pipeline) — but still confirm if the change affects rendered book output
+- User's message is **only** answering a version confirmation you asked in the same turn
+
+## Example
+
+User: "Change the caption on page 12 in v2."
+
+Agent: "Just to confirm — apply this to **v2** (redesign), not v1 (finished gift)?" → wait for yes → then edit `versions/v2/story.json`.

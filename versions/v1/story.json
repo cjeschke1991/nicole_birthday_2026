@@ -1,0 +1,746 @@
+{
+  "book": {
+    "title": "The Story of Us",
+    "subtitle": "Clay & Nicole",
+    "kicker": "A Birthday Keepsake",
+    "dedication": "For Nicole — On your birthday, here is the story of us: every season, every silly grin, every late night and early morning that turned the two of us into a family of four (plus two dogs). Thank you for building this life with me. I would choose it, and you, again and again. Happy birthday. — Clay",
+    "accent": "terracotta",
+    "cover": "2019/2019-06-27_IMG_0883_a83539.jpg",
+    "cast_title": "Our Little Family",
+    "cast_lede": "The people (and pups) who make up our story.",
+    "cast": [
+      {
+        "name": "Clay",
+        "cover": "covers/clay.jpg",
+        "role": "Dad"
+      },
+      {
+        "name": "Nicole",
+        "cover": "covers/nicole.jpg",
+        "role": "Mom"
+      },
+      {
+        "name": "Connor",
+        "cover": "covers/connor.jpg",
+        "role": "Big Brother"
+      },
+      {
+        "name": "Hailey",
+        "cover": "covers/hailey.jpg",
+        "role": "Little Sister"
+      },
+      {
+        "name": "Cooper",
+        "cover": "covers/cooper.jpg",
+        "role": "Good Boy"
+      },
+      {
+        "name": "Zoa",
+        "cover": "covers/zoa.jpg",
+        "role": "Good Girl"
+      }
+    ]
+  },
+  "years": [
+    {
+      "year": 2015,
+      "title": "Just the Two of Us",
+      "intro": "Our story actually started back in 2007 — this is just where the camera roll picks up. Concerts, ballgames, and any excuse to be together: we were young and completely hooked.",
+      "photos": [
+        {
+          "file": "2015/2015-09-26_IMG_0565_a4122a.jpg",
+          "caption": "Our first Cubs game together — the first of so many.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2015-09-26"
+        },
+        {
+          "file": "2015/2015-05-15_IMG_0395_f83002.jpg",
+          "caption": "Out on the town.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2015-05-15"
+        },
+        {
+          "file": "2015/2015-05-16_IMG_0411_a9bfeb.jpg",
+          "caption": "All dressed up.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2015-05-16"
+        },
+        {
+          "file": "2015/2015-05-22_IMG_0428_532d8c.jpg",
+          "caption": "Festival season.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2015-05-22"
+        },
+        {
+          "file": "2015/2015-08-14_IMG_0492_8afa5e.jpg",
+          "caption": "Front row, ears ringing, grinning.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2015-08-14"
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "title": "Jerseys, Skylines & Sunny Days",
+      "intro": "Blackhawks nights, Cubs afternoons, boat rides, and a city that felt like it belonged to us.",
+      "photos": [
+        {
+          "file": "2016/2016-04-16_IMG_0733_cd463b.jpg",
+          "caption": "Cubs jerseys, Wrigley Field.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2016-04-16"
+        },
+        {
+          "file": "2016/2016-03-22_IMG_0717_3a4ced.jpg",
+          "caption": "Blackhawks nights.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2016-03-22"
+        },
+        {
+          "file": "2016/2016-07-02_IMG_0792_d9e452.jpg",
+          "caption": "Chicago river cruise.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2016-07-02"
+        },
+        {
+          "file": "2016/2016-07-02_IMG_0781_64e194.jpg",
+          "caption": "City lights.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2016-07-02"
+        },
+        {
+          "file": "2016/2016-07-16_IMG_0803_72145d.jpg",
+          "caption": "Out on the water.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2016-07-16"
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "title": "She Said Yes",
+      "intro": "On a cold February day at Kickapoo State Park, Clay got down on one knee — and Nicole said yes. Dating quietly turned into forever.",
+      "photos": [
+        {
+          "file": "covers/kickapoo_engagement.jpg",
+          "caption": "Engaged at Kickapoo State Park — February 22, 2017.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2017-02-22"
+        },
+        {
+          "file": "2017/2017-05-20_IMG_1115_04172b.jpg",
+          "caption": "A night above the city.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2017-05-20"
+        },
+        {
+          "file": "2017/2017-05-13_IMG_1104_81141c.jpg",
+          "caption": "Date night.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2017-05-13"
+        },
+        {
+          "file": "2017/2017-05-20_IMG_1130_79b23d.jpg",
+          "caption": "Dinner for two.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2017-05-20"
+        },
+        {
+          "file": "2017/2017-05-20_IMG_1132_32a727.jpg",
+          "caption": "Dressed to the nines.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2017-05-20"
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "title": "City Nights & Wedding Season",
+      "intro": "Weddings to dance at, friends to celebrate, and a skyline that lit up every night out.",
+      "photos": [
+        {
+          "file": "2018/2018-06-30_IMG_1852_7bc854.jpg",
+          "caption": "The city felt like it belonged to us.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "full",
+          "date": "2018-06-30"
+        },
+        {
+          "file": "2018/2018-01-10_IMG_1474_fee0d9.jpg",
+          "caption": "Out with our people.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2018-01-10"
+        },
+        {
+          "file": "2018/2018-05-05_IMG_1672_4f9e8c.jpg",
+          "caption": "Wedding-guest season.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2018-05-05"
+        },
+        {
+          "file": "2018/2018-06-24_IMG_1805_2be051.jpg",
+          "caption": "Good friends, late nights.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2018-06-24"
+        },
+        {
+          "file": "2018/2018-01-10_IMG_1478_a56a99.jpg",
+          "caption": "Us, always.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2018-01-10"
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "title": "I Do — and Off to Paradise",
+      "intro": "We got married and ran straight off to Punta Cana for our honeymoon — rings on our fingers, sand between our toes, and the whole adventure ahead of us.",
+      "photos": [
+        {
+          "file": "2020/2020-12-22_IMG_5285_36f369.jpg",
+          "caption": "We said 'I do.' — June 1, 2019.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2019-06-01"
+        },
+        {
+          "file": "covers/punta_cana_parrot.jpg",
+          "caption": "Honeymoon in Punta Cana.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "full",
+          "date": "2019-06-16"
+        },
+        {
+          "file": "2019/2019-06-06_IMG_2244_f4a904.jpg",
+          "caption": "She made a feathered friend.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2019-06-17"
+        },
+        {
+          "file": "2019/2019-06-07_IMG_0756_28aa9a.jpg",
+          "caption": "Sun, sand, and newlyweds.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2019-06-18"
+        },
+        {
+          "file": "2019/2019-06-08_IMG_2253_f55d04.jpg",
+          "caption": "Paradise, party of two.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2019-06-19"
+        },
+        {
+          "file": "2019/2019-06-05_IMG_2186_deab88.jpg",
+          "caption": "Morning walks by the water.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2019-06-20"
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "title": "Mr. & Mrs.",
+      "intro": "Our first full year as husband and wife — a quieter, stay-close kind of year, with a new little one in the family to spoil.",
+      "photos": [
+        {
+          "file": "2020/2020-07-02_IMG_3839_8db1b9.jpg",
+          "caption": "Our first summer as newlyweds.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2020-07-02"
+        },
+        {
+          "file": "2020/2020-05-27_IMG_3397_f17441.jpg",
+          "caption": "Auntie duties — practicing for someday.",
+          "people": [
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2020-05-27"
+        },
+        {
+          "file": "2020/2020-06-14_IMG_3568_fd0280.jpg",
+          "caption": "Quiet days, close to home.",
+          "people": [
+            "Nicole"
+          ],
+          "layout": "pair",
+          "date": "2020-06-14"
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "title": "Just the Two of Us, Married",
+      "intro": "Newlywed life: weddings to dance at, ballgames to cheer at, and a whole future to plan together.",
+      "photos": [
+        {
+          "file": "2021/2021-07-18_IMG_7298_4b6982.jpg",
+          "caption": "Married life looked a lot like this — close, and always laughing.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "hero",
+          "date": "2021-07-18"
+        },
+        {
+          "file": "2021/2021-07-03_IMG_7220_7a4493.jpg",
+          "caption": "Dressed up for someone's big day.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2021-07-03"
+        },
+        {
+          "file": "2021/2021-09-11_IMG_7801_a5fb59.jpg",
+          "caption": "Ballgame, shades on.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2021-09-11"
+        },
+        {
+          "file": "2021/2021-06-15_IMG_6908_8073f4.jpg",
+          "caption": "Catching our breath.",
+          "people": [
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2021-06-15"
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "title": "Cooper Joins the Family",
+      "intro": "Our family grew four paws bigger. Cooper turned every ordinary day into something to wag about.",
+      "photos": [
+        {
+          "file": "covers/cooper_coming_home.jpg",
+          "caption": "Welcome home, Cooper.",
+          "people": [
+            "Clay",
+            "Cooper"
+          ],
+          "layout": "hero",
+          "date": "2022-10-23"
+        },
+        {
+          "file": "2022/2022-09-12_IMG_0322_93b682.jpg",
+          "caption": "Puppy's first ride home.",
+          "people": [
+            "Nicole",
+            "Cooper"
+          ],
+          "layout": "collage",
+          "date": "2022-09-12"
+        },
+        {
+          "file": "2022/2022-05-06_IMG_9167_1982db.jpg",
+          "caption": "Out on the water.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2022-05-06"
+        },
+        {
+          "file": "2022/2022-08-07_IMG_0012_3462e5.jpg",
+          "caption": "Wrigley, our happy place.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2022-08-07"
+        },
+        {
+          "file": "2022/2022-09-02_IMG_0159_c8b361.jpg",
+          "caption": "Date night.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "collage",
+          "date": "2022-09-02"
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "title": "Then There Were Three",
+      "intro": "We went to a ballgame with a secret, and ended the year as three. Connor arrived in October and made us parents — and nothing was ever the same, in the very best way.",
+      "photos": [
+        {
+          "file": "covers/connor_welcome.jpg",
+          "caption": "Bringing Connor home.",
+          "people": [
+            "Clay",
+            "Nicole"
+          ],
+          "layout": "full",
+          "date": "2023-09-22"
+        },
+        {
+          "file": "covers/connor_welcome.jpg",
+          "caption": "Hello, Connor. Born October 15, 2023.",
+          "people": [
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "hero",
+          "date": "2023-10-15"
+        },
+        {
+          "file": "2023/2023-10-24_IMG_3238_d928f3.jpg",
+          "caption": "Tiny and brand new.",
+          "people": [
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2023-10-24"
+        },
+        {
+          "file": "2023/2023-11-13_IMG_3484_cf6a75.jpg",
+          "caption": "Snuggles with our newest.",
+          "people": [
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2023-11-13"
+        },
+        {
+          "file": "2023/2023-12-25_IMG_3908_047083.jpg",
+          "caption": "Connor's first Christmas.",
+          "people": [
+            "Clay",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2023-12-25"
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "title": "Family of Three",
+      "intro": "Life as three found its rhythm — road trips, ballgames, and a whole lot of Connor's firsts.",
+      "photos": [
+        {
+          "file": "covers/wrigley_family_2024.jpg",
+          "caption": "Connor's first Wrigley game.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "hero",
+          "date": "2024-08-31"
+        },
+        {
+          "file": "2024/2024-03-31_IMG_5393_ea1472.jpg",
+          "caption": "Easter morning.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2024-03-31"
+        },
+        {
+          "file": "2024/2024-07-05_IMG_1332_e6e34f.jpg",
+          "caption": "Ballgame with the crew.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2024-07-05"
+        },
+        {
+          "file": "2024/2024-11-10_IMG_8023_f095e5.jpg",
+          "caption": "Connor's first hockey game.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2024-11-10"
+        },
+        {
+          "file": "2024/2024-01-21_IMG_4378_1cfa0c.jpg",
+          "caption": "Lazy Sunday at home.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2024-01-21"
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "title": "Then There Were Four",
+      "intro": "In July, Hailey made us four. Connor became a big brother, and our house got louder, busier, and twice as sweet.",
+      "photos": [
+        {
+          "file": "2025/2025-07-17_IMG_0952_428068.jpg",
+          "caption": "Hello, Hailey. Born July 17, 2025.",
+          "people": [
+            "Hailey"
+          ],
+          "layout": "hero",
+          "date": "2025-07-17"
+        },
+        {
+          "file": "2025/2025-01-17_IMG_3820_1f32bd.jpg",
+          "caption": "Adventures, party of three.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2025-01-17"
+        },
+        {
+          "file": "2025/2025-05-04_IMG_9896_b15c03.jpg",
+          "caption": "A day at the zoo.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2025-05-04"
+        },
+        {
+          "file": "2025/2025-08-19_IMG_1823_40795e.jpg",
+          "caption": "Life as four — plus Zoa.",
+          "people": [
+            "Nicole",
+            "Connor",
+            "Hailey",
+            "Zoa"
+          ],
+          "layout": "collage",
+          "date": "2025-08-19"
+        },
+        {
+          "file": "2025/2025-11-14_IMG_3384_00cb8e.jpg",
+          "caption": "All four of us, exactly where we belong.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor",
+            "Hailey"
+          ],
+          "layout": "collage",
+          "date": "2025-11-14"
+        },
+        {
+          "file": "2025/2025-12-31_IMG_4014_7d4826.jpg",
+          "caption": "Ringing in the new year as four.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor",
+            "Hailey"
+          ],
+          "layout": "collage",
+          "date": "2025-12-31"
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "title": "Our Favorite Chapter Yet",
+      "intro": "Here we are — a little louder, a lot busier, and happier than we ever imagined. The story is still being written.",
+      "photos": [
+        {
+          "file": "2026/2026-01-18_IMG_4105_6e56d8.jpg",
+          "caption": "Brother and sister.",
+          "people": [
+            "Connor",
+            "Hailey"
+          ],
+          "layout": "collage",
+          "date": "2026-01-18"
+        },
+        {
+          "file": "2026/2026-01-22_IMG_4142_17182d.jpg",
+          "caption": "Connor and Zoa, partners in crime.",
+          "people": [
+            "Connor",
+            "Zoa"
+          ],
+          "layout": "collage",
+          "date": "2026-01-22"
+        },
+        {
+          "file": "2026/2026-01-25_IMG_4165_30bd5c.jpg",
+          "caption": "Hailey's first game.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor"
+          ],
+          "layout": "collage",
+          "date": "2026-01-25"
+        },
+        {
+          "file": "2026/2026-04-18_IMG_5068_dbd0cc.jpg",
+          "caption": "Wrigley Field, party of four.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor",
+            "Hailey"
+          ],
+          "layout": "hero",
+          "date": "2026-04-18"
+        },
+        {
+          "file": "2026/2026-05-03_family_lawn.jpg",
+          "caption": "Mom, Hailey, Cooper, and Zoa — a perfect spring afternoon.",
+          "people": [
+            "Nicole",
+            "Hailey",
+            "Cooper",
+            "Zoa"
+          ],
+          "layout": "collage",
+          "date": "2026-05-03"
+        },
+        {
+          "file": "2026/2026-06-03_IMG_6543_7733f6.jpg",
+          "caption": "Snack break with Dad.",
+          "people": [
+            "Clay",
+            "Nicole",
+            "Connor",
+            "Hailey"
+          ],
+          "layout": "collage",
+          "date": "2026-06-03"
+        }
+      ]
+    }
+  ]
+}

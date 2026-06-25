@@ -3,10 +3,16 @@ photos_raw/**/*
 !photos_raw/**/.gitkeep
 photos_processed/**/*
 !photos_processed/.gitkeep
-!photos_processed/covers/
-!photos_processed/covers/**
 build/**/*
 !build/.gitkeep
+
+# Per-version generated output (regenerable)
+versions/*/build/**/*
+!versions/*/build/.gitkeep
+
+# Per-version swap photos ARE tracked (hand-picked replacements)
+!versions/*/photos/**
+!versions/*/photos/**/*
 
 # Python
 .venv/

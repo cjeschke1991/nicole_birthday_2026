@@ -1,27 +1,29 @@
 #!/usr/bin/env bash
-# Build the book: ingest photos -> draft story (only if missing) -> render PDFs.
-# Re-runnable and safe: it will NOT overwrite your edited story/story.json.
+# Build the book: ingest photos -> materialize -> render PDFs for one version.
+# Re-runnable and safe: it will NOT overwrite your edited story.json.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 # shellcheck disable=SC1091
 source .venv/bin/activate
 export PLAYWRIGHT_BROWSERS_PATH="$PWD/.playwright"
 
-echo "==> [1/4] Ingesting photos (index + thumbnails)"
+VERSION="${1:-v1}"
+STORY="versions/${VERSION}/story.json"
+
+echo "==> Building version: ${VERSION}"
+
+echo "==> [1/3] Ingesting photos (index + thumbnails)"
 python scripts/ingest.py
 
-if [ ! -f story/story.json ]; then
-  echo "==> [2/4] Drafting story/story.json (first run)"
-  python scripts/draft_story.py
-else
-  echo "==> [2/4] story/story.json already exists — keeping your edits."
-  echo "        (To regenerate from scratch: python scripts/draft_story.py --force)"
+if [ ! -f "${STORY}" ]; then
+  echo "ERROR: ${STORY} not found."
+  exit 1
 fi
 
-echo "==> [3/4] Materializing full-resolution prints for chosen photos"
-python scripts/materialize.py
+echo "==> [2/3] Materializing full-resolution prints for chosen photos"
+python scripts/materialize.py --version "${VERSION}"
 
-echo "==> [4/4] Rendering PDFs"
-python scripts/render.py
+echo "==> [3/3] Rendering PDFs"
+python scripts/render.py --version "${VERSION}"
 
-echo "==> Done. See build/Story_of_Us_home.pdf and build/Story_of_Us_shop.pdf"
+echo "==> Done. Open versions/${VERSION}/build/Story_of_Us_home.pdf"

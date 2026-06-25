@@ -48,13 +48,21 @@ Once your photos are in `photos_raw/`, let me know and I'll:
    and year intros.
 
 ## Step 3 — You personalize
-Edit `story/story.json` — rewrite captions, year intros, and the dedication. Add the real
-stories, place names, and inside jokes.
+Edit the version you're working on:
+- **v1** (finished gift): `versions/v1/story.json`
+- **v2** (redesign): `versions/v2/story.json`
+
+Rewrite captions, year intros, and the dedication. Add the real stories, place names, and inside jokes. See `versions/README.md` for how versions work.
 
 ## Step 4 — Render
-I'll generate two PDFs from the same source:
-- `build/Story_of_Us_home.pdf` — for printing at home.
-- `build/Story_of_Us_shop.pdf` — for a photo shop (bleed + crop marks).
+```bash
+python scripts/render.py --version v1    # finished gift edition
+python scripts/render.py --version v2    # experimental redesign
+```
+
+Each version produces its own PDFs:
+- `versions/v1/build/Story_of_Us_home.pdf` — for printing at home
+- `versions/v1/build/Story_of_Us_shop.pdf` — for a photo shop (bleed + crop marks)
 
 ## Step 5 — Print & bind
 Print one test page first to check color/margins, then the full book. Bind into your binder/book.
@@ -68,18 +76,18 @@ One-time setup (already done in this project, but to recreate it elsewhere):
 bash scripts/setup.sh
 ```
 
-Each time you add/replace photos or edit the story, rebuild:
+Each time you add/replace photos or edit a version's story, rebuild:
 ```bash
-bash scripts/build_book.sh
+bash scripts/build_book.sh v1    # or v2
 ```
 
 Or run the steps individually:
 ```bash
 source .venv/bin/activate
-python scripts/ingest.py            # sort, de-dupe, contact sheets, manifest
-python scripts/draft_story.py       # first-draft story/story.json (won't overwrite edits)
-python scripts/render.py            # build both PDFs
-python scripts/render.py --profile home   # just one profile
+python scripts/ingest.py                       # sort, de-dupe, contact sheets, manifest
+python scripts/draft_story.py --version v1     # first-draft story (won't overwrite edits)
+python scripts/render.py --version v1          # build PDFs for that version
+python scripts/render.py --version v1 --profile home   # just one profile
 ```
 
 > **Starting over with real photos:** the project currently contains *placeholder*
@@ -102,9 +110,9 @@ python scripts/render.py --profile home   # just one profile
 
 ### Folders
 - `photos_raw/` — **your exports** (never modified by scripts).
-- `photos_processed/` — auto-generated, sorted by year.
-- `story/story.json` — the editable source of truth (back this up!).
-- `build/` — generated HTML, PDFs, thumbnails (regenerable anytime).
-
-Everything runs locally on your Mac. Nothing is uploaded.
+- `photos_processed/` — auto-generated, sorted by year (shared library).
+- `versions/v1/`, `versions/v2/` — **independent book editions** (story, design, swap photos, PDFs).
+- `story/` — legacy example + milestones; edit `versions/{v}/story.json` instead.
+- `build/` — shared ingest output (manifest, thumbnails).
+- Everything runs locally on your Mac. Nothing is uploaded.
 # nicole_birthday_2026

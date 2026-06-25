@@ -19,7 +19,7 @@ import argparse
 import json
 
 import common
-from common import MANIFEST_JSON, STORY_DIR, STORY_JSON, SUBJECTS
+from common import DEFAULT_VERSION, MANIFEST_JSON, STORY_DIR, SUBJECTS, set_version
 
 
 def natural_join(names: list[str]) -> str:
@@ -156,7 +156,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max", type=int, default=7, help="max photos per year")
     ap.add_argument("--force", action="store_true", help="overwrite story.json")
+    ap.add_argument("--version", default=DEFAULT_VERSION, help="target version folder")
     args = ap.parse_args()
+
+    vp = set_version(args.version)
 
     if not MANIFEST_JSON.exists():
         print("No build/manifest.json. Run scripts/ingest.py first.")
@@ -168,15 +171,15 @@ def main() -> None:
 
     story = build_story(manifest, args.max)
     STORY_DIR.mkdir(parents=True, exist_ok=True)
-    target = STORY_JSON if (args.force or not STORY_JSON.exists()) else STORY_DIR / "story.draft.json"
+    target = vp.story_json if (args.force or not vp.story_json.exists()) else vp.root / "story.draft.json"
     target.write_text(json.dumps(story, indent=2, ensure_ascii=False))
 
     total = sum(len(y["photos"]) for y in story["years"])
     print(f"Drafted {total} photos across {len(story['years'])} years -> "
           f"{target.relative_to(common.ROOT)}")
-    if target != STORY_JSON:
-        print("(story.json already exists; wrote a draft alongside it so your "
-              "edits are safe. Use --force to overwrite.)")
+    if target != vp.story_json:
+        print(f"(versions/{vp.name}/story.json already exists; wrote a draft alongside it. "
+              "Use --force to overwrite.)")
 
 
 if __name__ == "__main__":
