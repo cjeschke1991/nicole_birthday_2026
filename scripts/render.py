@@ -54,6 +54,50 @@ COLLAGE_SLOTS = {
         (6, 52, 40, 42, 2.5), (50, 50, 46, 44, -1.5)],
 }
 
+# Scatter slot: left%, top%, width%, height%, rot°, clipart%, clipart%
+SCATTER_RECIPES: dict[str, list[tuple]] = {
+    "scatter-a": [
+        (5, 8, 20, 30, -6, 22, 4),
+        (52, 6, 18, 28, 4, 66, 2),
+        (8, 52, 22, 32, 3, 26, 48),
+        (50, 48, 20, 30, -4, 66, 44),
+        (74, 32, 18, 28, 7, 88, 28),
+    ],
+    "scatter-b": [
+        (62, 8, 19, 29, 5, 76, 4),
+        (38, 18, 20, 30, -3, 54, 14),
+        (10, 38, 21, 31, 4, 28, 34),
+        (55, 45, 18, 28, -5, 70, 40),
+        (28, 58, 20, 30, 6, 44, 56),
+    ],
+    "scatter-c": [
+        (68, 10, 18, 27, -4, 82, 6),
+        (8, 14, 20, 30, 5, 24, 8),
+        (42, 28, 19, 29, -2, 58, 22),
+        (14, 55, 21, 31, 3, 32, 54),
+        (58, 52, 18, 28, -6, 72, 48),
+    ],
+    "scatter-d": [
+        (12, 10, 20, 30, 3, 28, 6),
+        (48, 8, 19, 28, -5, 64, 4),
+        (72, 22, 18, 27, 6, 86, 16),
+        (22, 48, 21, 31, -4, 40, 44),
+        (52, 50, 20, 30, 4, 68, 46),
+    ],
+}
+
+CAPTION_GAP = 2.5  # percent gap between photo edge and caption box
+
+
+def scatter_caption_pos(left: float, top: float, w: float, h: float, idx: int) -> tuple[float, float]:
+    """Place caption outside the photo frame — never overlapping the image."""
+    side = idx % 3
+    if side == 0:
+        return left, top + h + CAPTION_GAP
+    if side == 1:
+        return left + w + CAPTION_GAP, top + 1
+    return max(2, left - 22), top + h * 0.15
+
 ROLE_HINTS = {
     "Clay": "Dad", "Nicole": "Mom", "Connor": "Son", "Hailey": "Daughter",
     "Cooper": "Our Dog", "Zoa": "Our Dog",
@@ -78,6 +122,16 @@ def cover_uri(rel: str, vp: VersionPaths) -> str:
     if not path.exists():
         _missing_photos.append(rel)
     return to_uri(path)
+
+
+def clipart_uri(theme: str, vp: VersionPaths) -> str | None:
+    clip_dir = vp.root / "assets" / "clipart"
+    path = clip_dir / f"{theme}.svg"
+    if not path.exists():
+        path = clip_dir / "heart.svg"
+    if path.exists():
+        return to_uri(path)
+    return None
 
 
 def fmt_date(iso: str) -> str:
@@ -179,6 +233,14 @@ def layout_year(yr: dict, photos: list[dict], vp: VersionPaths) -> list[dict]:
                 group.append(photos[i]); i += 1
             out.append(make_collage(yr, group, vp))
 
+        elif layout.startswith("scatter"):
+            recipe = layout
+            group = []
+            while i < n and photos[i].get("layout") == recipe and len(group) < 5:
+                group.append(photos[i]); i += 1
+            if group:
+                out.append(make_scatter(yr, group, recipe, vp))
+
         else:
             out.append({"type": "content", "layout": "hero",
                         "img": photo_uri(p["file"], vp),
@@ -202,6 +264,33 @@ def make_collage(yr: dict, group: list[dict], vp: VersionPaths) -> dict:
         })
     return {"type": "content", "layout": "collage",
             "year_tag": str(yr.get("year", "")), "shots": shots}
+
+
+def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths) -> dict:
+    slots = SCATTER_RECIPES.get(recipe, SCATTER_RECIPES["scatter-a"])
+    items = []
+    for idx, g in enumerate(group):
+        left, top, w, h, rot, cil, cit = slots[idx]
+        cl, ct = scatter_caption_pos(left, top, w, h, idx)
+        theme = g.get("theme", "heart")
+        items.append({
+            "img": photo_uri(g["file"], vp),
+            "caption": g.get("caption", ""),
+            "date": fmt_date(g.get("date", "")),
+            "left": f"{left}%", "top": f"{top}%",
+            "width": f"{w}%", "height": f"{h}%",
+            "rot": rot,
+            "cap_left": f"{cl}%", "cap_top": f"{ct}%",
+            "clip_left": f"{cil}%", "clip_top": f"{cit}%",
+            "clipart": clipart_uri(theme, vp),
+            "z": idx + 1,
+        })
+    return {
+        "type": "content",
+        "layout": recipe,
+        "year_tag": str(yr.get("year", "")),
+        "cells": items,
+    }
 
 
 def template_dirs(vp: VersionPaths) -> list[str]:

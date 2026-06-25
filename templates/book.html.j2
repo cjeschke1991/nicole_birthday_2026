@@ -8,7 +8,7 @@
 {{ book_css }}
 </style>
 </head>
-<body class="profile-{{ profile.name }} accent-{{ book.accent|default('terracotta') }}">
+<body class="profile-{{ profile.name }} accent-{{ book.accent|default('terracotta') }} edition-{{ book.edition|default('editorial') }}">
 
 {% macro cropmarks() %}
   <div class="cropmark h cm-tl-h"></div><div class="cropmark v cm-tl-v"></div>
@@ -111,6 +111,29 @@
     <div class="cap">
       {% if pg.date %}<div class="date">{{ pg.date }}</div>{% endif %}
       <div class="caption">{{ pg.caption }}</div>
+    </div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'content' and pg.layout.startswith('scatter') %}
+  <section class="page layout-scatter {{ pg.layout }}">
+    <div class="trim">
+      <div class="scatter-stage">
+        {% if pg.year_tag %}<div class="scatter-year">{{ pg.year_tag }}</div>{% endif %}
+        {% for it in pg.cells %}
+        <div class="scatter-photo" style="top:{{ it.top }}; left:{{ it.left }}; width:{{ it.width }}; height:{{ it.height }}; transform: rotate({{ it.rot }}deg); z-index:{{ it.z }};">
+          <div class="photo"><img src="{{ it.img }}"></div>
+        </div>
+        {% if it.caption %}
+        <div class="scatter-caption" style="top:{{ it.cap_top }}; left:{{ it.cap_left }}; z-index:{{ it.z + 10 }};">{{ it.caption }}</div>
+        {% endif %}
+        {% if it.clipart %}
+        <div class="scatter-clipart" style="top:{{ it.clip_top }}; left:{{ it.clip_left }}; z-index:{{ it.z + 5 }};">
+          <img src="{{ it.clipart }}">
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
     </div>
     {{ cropmarks() }}
   </section>

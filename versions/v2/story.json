@@ -4,7 +4,7 @@
     "subtitle": "Clay & Nicole",
     "kicker": "A Birthday Keepsake",
     "dedication": "For Nicole — On your birthday, here is the story of us: every season, every silly grin, every late night and early morning that turned the two of us into a family of four (plus two dogs). Thank you for building this life with me. I would choose it, and you, again and again. Happy birthday. — Clay",
-    "accent": "terracotta",
+    "accent": "sky",
     "cover": "2019/2019-06-27_IMG_0883_a83539.jpg",
     "cast_title": "Our Little Family",
     "cast_lede": "The people (and pups) who make up our story.",
@@ -39,7 +39,8 @@
         "cover": "covers/zoa.jpg",
         "role": "Good Girl"
       }
-    ]
+    ],
+    "edition": "scrapbook"
   },
   "years": [
     {
@@ -54,8 +55,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2015-09-26"
+          "layout": "scatter-a",
+          "date": "2015-09-26",
+          "theme": "baseball"
         },
         {
           "file": "2015/2015-05-15_IMG_0395_f83002.jpg",
@@ -64,8 +66,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2015-05-15"
+          "layout": "scatter-a",
+          "date": "2015-05-15",
+          "theme": "heart"
         },
         {
           "file": "2015/2015-05-16_IMG_0411_a9bfeb.jpg",
@@ -74,8 +77,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2015-05-16"
+          "layout": "scatter-a",
+          "date": "2015-05-16",
+          "theme": "heart"
         },
         {
           "file": "2015/2015-05-22_IMG_0428_532d8c.jpg",
@@ -84,8 +88,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2015-05-22"
+          "layout": "scatter-a",
+          "date": "2015-05-22",
+          "theme": "music"
         },
         {
           "file": "2015/2015-08-14_IMG_0492_8afa5e.jpg",
@@ -94,8 +99,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2015-08-14"
+          "layout": "scatter-a",
+          "date": "2015-08-14",
+          "theme": "heart"
         }
       ]
     },
@@ -111,8 +117,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2016-04-16"
+          "layout": "scatter-b",
+          "date": "2016-04-16",
+          "theme": "baseball"
         },
         {
           "file": "2016/2016-03-22_IMG_0717_3a4ced.jpg",
@@ -121,8 +128,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2016-03-22"
+          "layout": "scatter-b",
+          "date": "2016-03-22",
+          "theme": "hockey"
         },
         {
           "file": "2016/2016-07-02_IMG_0792_d9e452.jpg",
@@ -131,8 +139,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2016-07-02"
+          "layout": "scatter-b",
+          "date": "2016-07-02",
+          "theme": "boat"
         },
         {
           "file": "2016/2016-07-02_IMG_0781_64e194.jpg",
@@ -141,8 +150,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2016-07-02"
+          "layout": "scatter-b",
+          "date": "2016-07-02",
+          "theme": "city"
         },
         {
           "file": "2016/2016-07-16_IMG_0803_72145d.jpg",
@@ -151,8 +161,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2016-07-16"
+          "layout": "scatter-b",
+          "date": "2016-07-16",
+          "theme": "boat"
         }
       ]
     },
@@ -168,8 +179,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2017-02-22"
+          "layout": "scatter-c",
+          "date": "2017-02-22",
+          "theme": "heart"
         },
         {
           "file": "2017/2017-05-20_IMG_1115_04172b.jpg",
@@ -178,8 +190,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2017-05-20"
+          "layout": "scatter-c",
+          "date": "2017-05-20",
+          "theme": "city"
         },
         {
           "file": "2017/2017-05-13_IMG_1104_81141c.jpg",
@@ -188,8 +201,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2017-05-13"
+          "layout": "scatter-c",
+          "date": "2017-05-13",
+          "theme": "heart"
         },
         {
           "file": "2017/2017-05-20_IMG_1130_79b23d.jpg",
@@ -198,8 +212,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2017-05-20"
+          "layout": "scatter-c",
+          "date": "2017-05-20",
+          "theme": "food"
         },
         {
           "file": "2017/2017-05-20_IMG_1132_32a727.jpg",
@@ -208,8 +223,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2017-05-20"
+          "layout": "scatter-c",
+          "date": "2017-05-20",
+          "theme": "heart"
         }
       ]
     },
@@ -225,8 +241,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "full",
-          "date": "2018-06-30"
+          "layout": "scatter-d",
+          "date": "2018-06-30",
+          "theme": "city"
         },
         {
           "file": "2018/2018-01-10_IMG_1474_fee0d9.jpg",
@@ -235,8 +252,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2018-01-10"
+          "layout": "scatter-d",
+          "date": "2018-01-10",
+          "theme": "heart"
         },
         {
           "file": "2018/2018-05-05_IMG_1672_4f9e8c.jpg",
@@ -245,8 +263,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2018-05-05"
+          "layout": "scatter-d",
+          "date": "2018-05-05",
+          "theme": "wedding"
         },
         {
           "file": "2018/2018-06-24_IMG_1805_2be051.jpg",
@@ -255,8 +274,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2018-06-24"
+          "layout": "scatter-d",
+          "date": "2018-06-24",
+          "theme": "heart"
         },
         {
           "file": "2018/2018-01-10_IMG_1478_a56a99.jpg",
@@ -265,8 +285,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2018-01-10"
+          "layout": "scatter-d",
+          "date": "2018-01-10",
+          "theme": "heart"
         }
       ]
     },
@@ -282,8 +303,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2019-06-01"
+          "layout": "scatter-a",
+          "date": "2019-06-01",
+          "theme": "wedding"
         },
         {
           "file": "covers/punta_cana_parrot.jpg",
@@ -292,8 +314,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "full",
-          "date": "2019-06-16"
+          "layout": "scatter-a",
+          "date": "2019-06-16",
+          "theme": "travel"
         },
         {
           "file": "2019/2019-06-06_IMG_2244_f4a904.jpg",
@@ -302,8 +325,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2019-06-17"
+          "layout": "scatter-a",
+          "date": "2019-06-17",
+          "theme": "food"
         },
         {
           "file": "2019/2019-06-07_IMG_0756_28aa9a.jpg",
@@ -312,8 +336,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2019-06-18"
+          "layout": "scatter-b",
+          "date": "2019-06-18",
+          "theme": "heart"
         },
         {
           "file": "2019/2019-06-08_IMG_2253_f55d04.jpg",
@@ -322,8 +347,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2019-06-19"
+          "layout": "scatter-b",
+          "date": "2019-06-19",
+          "theme": "travel"
         },
         {
           "file": "2019/2019-06-05_IMG_2186_deab88.jpg",
@@ -332,8 +358,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2019-06-20"
+          "layout": "scatter-b",
+          "date": "2019-06-20",
+          "theme": "boat"
         }
       ]
     },
@@ -349,8 +376,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2020-07-02"
+          "layout": "scatter-c",
+          "date": "2020-07-02",
+          "theme": "heart"
         },
         {
           "file": "2020/2020-05-27_IMG_3397_f17441.jpg",
@@ -358,8 +386,9 @@
           "people": [
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2020-05-27"
+          "layout": "scatter-c",
+          "date": "2020-05-27",
+          "theme": "heart"
         },
         {
           "file": "2020/2020-06-14_IMG_3568_fd0280.jpg",
@@ -367,8 +396,9 @@
           "people": [
             "Nicole"
           ],
-          "layout": "pair",
-          "date": "2020-06-14"
+          "layout": "scatter-c",
+          "date": "2020-06-14",
+          "theme": "home"
         }
       ]
     },
@@ -384,8 +414,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "hero",
-          "date": "2021-07-18"
+          "layout": "scatter-d",
+          "date": "2021-07-18",
+          "theme": "wedding"
         },
         {
           "file": "2021/2021-07-03_IMG_7220_7a4493.jpg",
@@ -394,8 +425,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2021-07-03"
+          "layout": "scatter-d",
+          "date": "2021-07-03",
+          "theme": "heart"
         },
         {
           "file": "2021/2021-09-11_IMG_7801_a5fb59.jpg",
@@ -404,8 +436,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2021-09-11"
+          "layout": "scatter-d",
+          "date": "2021-09-11",
+          "theme": "baseball"
         },
         {
           "file": "2021/2021-06-15_IMG_6908_8073f4.jpg",
@@ -413,8 +446,9 @@
           "people": [
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2021-06-15"
+          "layout": "scatter-d",
+          "date": "2021-06-15",
+          "theme": "food"
         }
       ]
     },
@@ -430,8 +464,9 @@
             "Clay",
             "Cooper"
           ],
-          "layout": "hero",
-          "date": "2022-10-23"
+          "layout": "scatter-a",
+          "date": "2022-10-23",
+          "theme": "dog"
         },
         {
           "file": "2022/2022-09-12_IMG_0322_93b682.jpg",
@@ -440,8 +475,9 @@
             "Nicole",
             "Cooper"
           ],
-          "layout": "collage",
-          "date": "2022-09-12"
+          "layout": "scatter-a",
+          "date": "2022-09-12",
+          "theme": "dog"
         },
         {
           "file": "2022/2022-05-06_IMG_9167_1982db.jpg",
@@ -450,8 +486,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2022-05-06"
+          "layout": "scatter-a",
+          "date": "2022-05-06",
+          "theme": "boat"
         },
         {
           "file": "2022/2022-08-07_IMG_0012_3462e5.jpg",
@@ -460,8 +497,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2022-08-07"
+          "layout": "scatter-a",
+          "date": "2022-08-07",
+          "theme": "baseball"
         },
         {
           "file": "2022/2022-09-02_IMG_0159_c8b361.jpg",
@@ -470,8 +508,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "collage",
-          "date": "2022-09-02"
+          "layout": "scatter-a",
+          "date": "2022-09-02",
+          "theme": "heart"
         }
       ]
     },
@@ -487,8 +526,9 @@
             "Clay",
             "Nicole"
           ],
-          "layout": "full",
-          "date": "2023-09-22"
+          "layout": "scatter-b",
+          "date": "2023-09-22",
+          "theme": "baby"
         },
         {
           "file": "covers/connor_welcome.jpg",
@@ -497,8 +537,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "hero",
-          "date": "2023-10-15"
+          "layout": "scatter-b",
+          "date": "2023-10-15",
+          "theme": "baby"
         },
         {
           "file": "2023/2023-10-24_IMG_3238_d928f3.jpg",
@@ -507,8 +548,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2023-10-24"
+          "layout": "scatter-b",
+          "date": "2023-10-24",
+          "theme": "heart"
         },
         {
           "file": "2023/2023-11-13_IMG_3484_cf6a75.jpg",
@@ -517,8 +559,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2023-11-13"
+          "layout": "scatter-b",
+          "date": "2023-11-13",
+          "theme": "heart"
         },
         {
           "file": "2023/2023-12-25_IMG_3908_047083.jpg",
@@ -527,8 +570,9 @@
             "Clay",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2023-12-25"
+          "layout": "scatter-b",
+          "date": "2023-12-25",
+          "theme": "baby"
         }
       ]
     },
@@ -545,8 +589,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "hero",
-          "date": "2024-08-31"
+          "layout": "scatter-c",
+          "date": "2024-08-31",
+          "theme": "baseball"
         },
         {
           "file": "2024/2024-03-31_IMG_5393_ea1472.jpg",
@@ -556,8 +601,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2024-03-31"
+          "layout": "scatter-c",
+          "date": "2024-03-31",
+          "theme": "heart"
         },
         {
           "file": "2024/2024-07-05_IMG_1332_e6e34f.jpg",
@@ -567,8 +613,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2024-07-05"
+          "layout": "scatter-c",
+          "date": "2024-07-05",
+          "theme": "baseball"
         },
         {
           "file": "2024/2024-11-10_IMG_8023_f095e5.jpg",
@@ -578,8 +625,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2024-11-10"
+          "layout": "scatter-c",
+          "date": "2024-11-10",
+          "theme": "hockey"
         },
         {
           "file": "2024/2024-01-21_IMG_4378_1cfa0c.jpg",
@@ -589,8 +637,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2024-01-21"
+          "layout": "scatter-c",
+          "date": "2024-01-21",
+          "theme": "home"
         }
       ]
     },
@@ -605,8 +654,9 @@
           "people": [
             "Hailey"
           ],
-          "layout": "hero",
-          "date": "2025-07-17"
+          "layout": "scatter-d",
+          "date": "2025-07-17",
+          "theme": "baby"
         },
         {
           "file": "2025/2025-01-17_IMG_3820_1f32bd.jpg",
@@ -616,8 +666,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2025-01-17"
+          "layout": "scatter-d",
+          "date": "2025-01-17",
+          "theme": "baby"
         },
         {
           "file": "2025/2025-05-04_IMG_9896_b15c03.jpg",
@@ -627,8 +678,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2025-05-04"
+          "layout": "scatter-d",
+          "date": "2025-05-04",
+          "theme": "heart"
         },
         {
           "file": "2025/2025-08-19_IMG_1823_40795e.jpg",
@@ -639,8 +691,9 @@
             "Hailey",
             "Zoa"
           ],
-          "layout": "collage",
-          "date": "2025-08-19"
+          "layout": "scatter-a",
+          "date": "2025-08-19",
+          "theme": "dog"
         },
         {
           "file": "2025/2025-11-14_IMG_3384_00cb8e.jpg",
@@ -651,8 +704,9 @@
             "Connor",
             "Hailey"
           ],
-          "layout": "collage",
-          "date": "2025-11-14"
+          "layout": "scatter-a",
+          "date": "2025-11-14",
+          "theme": "baby"
         },
         {
           "file": "2025/2025-12-31_IMG_4014_7d4826.jpg",
@@ -663,8 +717,9 @@
             "Connor",
             "Hailey"
           ],
-          "layout": "collage",
-          "date": "2025-12-31"
+          "layout": "scatter-a",
+          "date": "2025-12-31",
+          "theme": "baby"
         }
       ]
     },
@@ -680,8 +735,9 @@
             "Connor",
             "Hailey"
           ],
-          "layout": "collage",
-          "date": "2026-01-18"
+          "layout": "scatter-b",
+          "date": "2026-01-18",
+          "theme": "heart"
         },
         {
           "file": "2026/2026-01-22_IMG_4142_17182d.jpg",
@@ -690,8 +746,9 @@
             "Connor",
             "Zoa"
           ],
-          "layout": "collage",
-          "date": "2026-01-22"
+          "layout": "scatter-b",
+          "date": "2026-01-22",
+          "theme": "dog"
         },
         {
           "file": "2026/2026-01-25_IMG_4165_30bd5c.jpg",
@@ -701,8 +758,9 @@
             "Nicole",
             "Connor"
           ],
-          "layout": "collage",
-          "date": "2026-01-25"
+          "layout": "scatter-b",
+          "date": "2026-01-25",
+          "theme": "baby"
         },
         {
           "file": "2026/2026-04-18_IMG_5068_dbd0cc.jpg",
@@ -713,8 +771,9 @@
             "Connor",
             "Hailey"
           ],
-          "layout": "hero",
-          "date": "2026-04-18"
+          "layout": "scatter-c",
+          "date": "2026-04-18",
+          "theme": "baseball"
         },
         {
           "file": "2026/2026-05-03_family_lawn.jpg",
@@ -725,8 +784,9 @@
             "Cooper",
             "Zoa"
           ],
-          "layout": "collage",
-          "date": "2026-05-03"
+          "layout": "scatter-c",
+          "date": "2026-05-03",
+          "theme": "dog"
         },
         {
           "file": "2026/2026-06-03_IMG_6543_7733f6.jpg",
@@ -737,8 +797,9 @@
             "Connor",
             "Hailey"
           ],
-          "layout": "collage",
-          "date": "2026-06-03"
+          "layout": "scatter-c",
+          "date": "2026-06-03",
+          "theme": "food"
         }
       ]
     }

@@ -1,253 +1,345 @@
 /* =========================================================================
-   The Story of Us — warm editorial photo book
-   Page: 11in x 8.5in landscape (Letter). Bleed/crop driven by render profile.
+   The Story of Us — v2 scrapbook edition
+   Small scattered photos, floating captions, themed clipart doodles
    ========================================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@400;600&display=swap');
+
 :root {
-  /* Profile variables injected by the renderer (home vs shop). */
   --bleed: 0in;
   --paper-w: 11in;
   --paper-h: 8.5in;
 
-  /* Warm editorial palette */
-  --ivory: #f6f1e7;
-  --ivory-deep: #efe7d8;
-  --ink: #3a322c;          /* soft charcoal-brown */
-  --ink-soft: #6f655c;
-  --line: #d9cfbf;
+  --paper: #fdf8f0;
+  --paper-dot: #f3ebe0;
+  --ink: #3d3832;
+  --ink-soft: #6b635a;
+  --line: #ddd0c0;
+  --accent: #5a9fb8;
+  --accent-warm: #e8927a;
 
-  /* Accent: overridden by .accent-sage on <body> */
-  --accent: #b9714e;       /* dusty terracotta */
-  --accent-soft: #e7c9b8;
-
-  --serif: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
-  --sans: "Avenir Next", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
-}
-
-body.accent-sage {
-  --accent: #7e8c6a;
-  --accent-soft: #cdd4bd;
+  --caption: "Caveat", "Comic Sans MS", cursive;
+  --body: "Nunito", "Avenir Next", system-ui, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
 }
 
 * { box-sizing: border-box; }
 
 html, body {
-  margin: 0;
-  padding: 0;
-  background: #888;        /* gray around pages in screen preview only */
+  margin: 0; padding: 0;
+  background: #888;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
   color: var(--ink);
-  font-family: var(--serif);
+  font-family: var(--body);
 }
 
-/* ----- Page shell ----- */
 .page {
   position: relative;
   width: var(--paper-w);
   height: var(--paper-h);
-  background: var(--ivory);
+  background: var(--paper);
   overflow: hidden;
   page-break-after: always;
   break-after: page;
 }
 .page:last-child { page-break-after: auto; }
 
-/* The trim box = live page area (paper minus bleed). */
-.trim {
-  position: absolute;
-  top: var(--bleed);
-  left: var(--bleed);
-  right: var(--bleed);
-  bottom: var(--bleed);
-}
-
-/* Safe inner area so nothing important is trimmed near the binding edge. */
-.safe {
-  position: absolute;
-  inset: 0;
-  padding: 0.6in 0.7in;
-}
-
-/* Subtle paper texture via layered gradients (prints lightly). */
 .page::before {
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,0.5), transparent 60%),
-    radial-gradient(140% 120% at 110% 120%, rgba(0,0,0,0.035), transparent 55%);
+    radial-gradient(circle at 20% 30%, rgba(90, 159, 184, 0.06), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(232, 146, 122, 0.07), transparent 45%),
+    radial-gradient(circle, var(--paper-dot) 1px, transparent 1px);
+  background-size: auto, auto, 18px 18px;
   pointer-events: none;
 }
 
-/* ----- Crop marks (shop profile only) ----- */
-.cropmark { position: absolute; background: #000; display: none; }
-body.profile-shop .cropmark { display: block; }
-.cropmark.h { width: 0.18in; height: 0.5pt; }
-.cropmark.v { width: 0.5pt; height: 0.18in; }
-/* corners: each corner gets one h + one v mark at the trim line */
-.cm-tl-h { top: var(--bleed); left: 0; }
-.cm-tl-v { top: 0; left: var(--bleed); }
-.cm-tr-h { top: var(--bleed); right: 0; }
-.cm-tr-v { top: 0; right: var(--bleed); }
-.cm-bl-h { bottom: var(--bleed); left: 0; }
-.cm-bl-v { bottom: 0; left: var(--bleed); }
-.cm-br-h { bottom: var(--bleed); right: 0; }
-.cm-br-v { bottom: 0; right: var(--bleed); }
+.trim {
+  position: absolute;
+  top: var(--bleed); left: var(--bleed);
+  right: var(--bleed); bottom: var(--bleed);
+}
 
-/* =========================================================================
-   Typography
-   ========================================================================= */
-.kicker {
-  font-family: var(--sans);
-  font-size: 9.5pt;
-  letter-spacing: 0.28em;
+.safe {
+  position: absolute;
+  inset: 0;
+  padding: 0.55in 0.65in;
+}
+
+/* ----- Crop marks (shop profile) ----- */
+.cropmark { position: absolute; background: #000; }
+.cropmark.h { height: 0.5pt; width: 0.25in; }
+.cropmark.v { width: 0.5pt; height: 0.25in; }
+.cm-tl-h { top: 0; left: 0; } .cm-tl-v { top: 0; left: 0; }
+.cm-tr-h { top: 0; right: 0; } .cm-tr-v { top: 0; right: 0; }
+.cm-bl-h { bottom: 0; left: 0; } .cm-bl-v { bottom: 0; left: 0; }
+.cm-br-h { bottom: 0; right: 0; } .cm-br-v { bottom: 0; right: 0; }
+
+.photo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ----- Cover (scrapbook) ----- */
+.edition-scrapbook .page.cover .bg img {
+  width: 42%;
+  height: auto;
+  max-height: 55%;
+  object-fit: contain;
+  position: absolute;
+  top: 18%;
+  right: 12%;
+  transform: rotate(3deg);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  border: 6px solid #fff;
+}
+.edition-scrapbook .page.cover .bg {
+  position: absolute; inset: 0;
+  background: var(--paper);
+}
+.edition-scrapbook .page.cover .scrim { display: none; }
+.edition-scrapbook .page.cover .title-block {
+  position: absolute;
+  left: 8%;
+  top: 28%;
+  max-width: 42%;
+}
+.edition-scrapbook .page.cover .kicker {
+  font-family: var(--caption);
+  font-size: 22pt;
+  color: var(--accent-warm);
+}
+.edition-scrapbook .page.cover h1 {
+  font-family: var(--caption);
+  font-size: 52pt;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0.1in 0;
+  color: var(--ink);
+}
+.edition-scrapbook .page.cover .subtitle {
+  font-family: var(--caption);
+  font-size: 26pt;
+  color: var(--accent);
+}
+.edition-scrapbook .page.cover .rule {
+  width: 1.2in;
+  height: 3px;
+  background: var(--accent-warm);
+  margin: 0.2in 0;
+  border-radius: 2px;
+}
+
+/* ----- Dedication ----- */
+.edition-scrapbook .page.dedication .body {
+  font-family: var(--caption);
+  font-size: 22pt;
+  line-height: 1.45;
+  max-width: 7in;
+  margin: 1.2in auto 0;
+  text-align: center;
+  color: var(--ink);
+}
+.edition-scrapbook .page.dedication .signoff {
+  font-family: var(--caption);
+  font-size: 20pt;
+  text-align: center;
+  margin-top: 0.4in;
+  color: var(--accent-warm);
+}
+.edition-scrapbook .page.dedication .flourish {
+  text-align: center;
+  opacity: 0.5;
+  margin-top: 0.5in;
+}
+
+/* ----- Cast (polaroid scatter) ----- */
+.edition-scrapbook .page.cast .kicker {
+  font-family: var(--caption);
+  font-size: 18pt;
+  color: var(--accent);
+}
+.edition-scrapbook .page.cast h2 {
+  font-family: var(--caption);
+  font-size: 36pt;
+  margin: 0 0 0.1in;
+}
+.edition-scrapbook .page.cast .lede {
+  font-size: 11pt;
+  color: var(--ink-soft);
+  margin-bottom: 0.35in;
+}
+.edition-scrapbook .page.cast .grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35in;
+  justify-content: center;
+}
+.edition-scrapbook .page.cast .member {
+  width: 1.65in;
+  text-align: center;
+}
+.edition-scrapbook .page.cast .portrait {
+  width: 1.55in;
+  height: 1.55in;
+  margin: 0 auto;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  transform: rotate(-2deg);
+}
+.edition-scrapbook .page.cast .member:nth-child(even) .portrait { transform: rotate(2deg); }
+.edition-scrapbook .page.cast .portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.edition-scrapbook .page.cast .name {
+  font-family: var(--caption);
+  font-size: 18pt;
+  margin-top: 0.08in;
+}
+.edition-scrapbook .page.cast .role {
+  font-size: 9pt;
+  color: var(--ink-soft);
+}
+
+/* ----- Year divider (scrapbook) ----- */
+.edition-scrapbook .page.year-divider .safe {
+  display: flex;
+  align-items: center;
+  gap: 0.5in;
+}
+.edition-scrapbook .page.year-divider .left { flex: 1; }
+.edition-scrapbook .page.year-divider .kicker {
+  font-family: var(--body);
+  font-size: 8pt;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
-  font-weight: 600;
 }
-.caption {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 12pt;
-  line-height: 1.35;
+.edition-scrapbook .page.year-divider .numeral {
+  font-family: var(--caption);
+  font-size: 72pt;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-warm);
+}
+.edition-scrapbook .page.year-divider h2 {
+  font-family: var(--caption);
+  font-size: 28pt;
+  color: var(--accent);
+  margin: 0.05in 0;
+}
+.edition-scrapbook .page.year-divider .intro {
+  font-size: 10pt;
+  line-height: 1.5;
   color: var(--ink-soft);
+  max-width: 4.5in;
 }
-.page-num {
-  position: absolute;
-  bottom: 0.32in; left: 0; right: 0;
-  text-align: center;
-  font-family: var(--sans);
-  font-size: 8pt;
-  letter-spacing: 0.2em;
-  color: var(--ink-soft);
+.edition-scrapbook .page.year-divider .thread {
+  width: 0.8in;
+  height: 3px;
+  background: var(--accent-warm);
+  margin-top: 0.2in;
+  border-radius: 2px;
 }
-
-/* Photo "frame": white mat + soft shadow, gives the placed-photo look. */
-.photo {
+.edition-scrapbook .page.year-divider .accent-photo {
+  width: 2.2in;
+  padding: 6px;
   background: #fff;
-  padding: 0.10in;
-  box-shadow: 0 0.06in 0.22in rgba(0,0,0,0.22);
-  border-radius: 1.5px;
-  /* Flex centering so contained images sit in the middle of the mat. */
-  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: rotate(4deg);
 }
-/* Use contain so no faces are ever cropped inside a white-mat frame. */
-.photo img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
-
-/* =========================================================================
-   COVER
-   ========================================================================= */
-.cover .bg { position: absolute; inset: 0; }
-.cover .bg img { width: 100%; height: 100%; object-fit: cover; }
-.cover .scrim {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(40,32,26,0.15) 0%, rgba(40,32,26,0.0) 35%, rgba(40,32,26,0.55) 100%);
-}
-.cover .title-block {
-  position: absolute; left: 0; right: 0; bottom: 1.0in;
-  text-align: center; color: #fff;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.45);
-}
-.cover .title-block .kicker { color: #fff; opacity: 0.9; }
-.cover h1 {
-  font-size: 58pt; font-weight: 600; margin: 0.12in 0 0.05in;
-  letter-spacing: 0.01em;
-}
-.cover .subtitle { font-style: italic; font-size: 20pt; opacity: 0.95; }
-.cover .rule {
-  width: 1.4in; height: 2px; background: var(--accent);
-  margin: 0.22in auto 0; opacity: 0.95;
+.edition-scrapbook .page.year-divider .accent-photo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-/* =========================================================================
-   DEDICATION
-   ========================================================================= */
-.dedication .safe { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.dedication .flourish { width: 1.8in; margin-bottom: 0.35in; color: var(--accent); }
-.dedication .body {
-  font-size: 17pt; line-height: 1.7; max-width: 6.6in; color: var(--ink);
-  font-style: italic;
+/* ----- Scatter content pages ----- */
+.layout-scatter .trim {
+  position: absolute;
+  inset: var(--bleed);
 }
-.dedication .signoff { margin-top: 0.4in; font-size: 13pt; color: var(--ink-soft); letter-spacing: 0.04em; }
 
-/* =========================================================================
-   CAST OF CHARACTERS
-   ========================================================================= */
-.cast .safe { display: flex; flex-direction: column; }
-.cast h2 { font-size: 30pt; margin: 0 0 0.1in; font-weight: 600; }
-.cast .lede { font-style: italic; color: var(--ink-soft); margin: 0 0 0.4in; font-size: 13pt; }
-.cast .grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0.35in 0.5in; flex: 1; align-content: center;
+.scatter-stage {
+  position: absolute;
+  inset: 0.45in 0.5in;
 }
-.cast .member { text-align: center; }
-.cast .portrait {
-  width: 1.7in; height: 1.7in; border-radius: 50%;
-  margin: 0 auto 0.14in; overflow: hidden;
-  border: 3px solid #fff; box-shadow: 0 0.05in 0.18in rgba(0,0,0,0.18);
-  background: var(--ivory-deep);
+
+.scatter-year {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: var(--caption);
+  font-size: 28pt;
+  color: var(--line);
+  opacity: 0.7;
+  transform: rotate(-8deg);
 }
-.cast .portrait img { width: 100%; height: 100%; object-fit: cover; }
-.cast .name { font-size: 15pt; }
-.cast .role { font-family: var(--sans); font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 2px; }
 
-/* =========================================================================
-   YEAR DIVIDER
-   ========================================================================= */
-.year-divider .safe { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 0.6in; align-items: center; }
-.year-divider .numeral {
-  font-size: 120pt; line-height: 0.9; font-weight: 600; color: var(--ink);
-  letter-spacing: -0.02em;
+.scatter-photo {
+  position: absolute;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.11);
 }
-.year-divider .kicker { display: block; margin-bottom: 0.1in; }
-.year-divider h2 { font-size: 30pt; margin: 0.12in 0 0.18in; font-weight: 600; font-style: italic; color: var(--accent); }
-.year-divider .intro { font-size: 13.5pt; line-height: 1.6; color: var(--ink); max-width: 4.6in; }
-.year-divider .accent-photo { width: 100%; height: 5.6in; }
-.year-divider .accent-photo img { object-position: center 15%; }
-.year-divider .thread { width: 2.2in; height: 2px; background: var(--accent-soft); margin-top: 0.3in; }
 
-/* =========================================================================
-   CONTENT LAYOUTS
-   ========================================================================= */
+.scatter-photo .photo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
-/* HERO: one dominant image with caption strip */
+.scatter-photo .photo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.scatter-caption {
+  position: absolute;
+  max-width: 2.2in;
+  font-family: var(--caption);
+  font-size: 17pt;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 0.05in 0.1in;
+  border-radius: 4px;
+  box-decoration-break: clone;
+}
+
+.scatter-clipart {
+  position: absolute;
+  width: 0.55in;
+  height: 0.55in;
+  opacity: 0.85;
+}
+
+.scatter-clipart img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Slight recipe-specific vibes */
+.scatter-a .scatter-photo:nth-child(odd) { border-bottom: 3px solid var(--accent-warm); }
+.scatter-b .scatter-photo { border-left: 3px solid var(--accent); }
+.scatter-c .scatter-caption { color: var(--accent); }
+.scatter-d .scatter-photo { border-radius: 2px; }
+
+/* Legacy v1 layouts (unused in v2 but harmless) */
+.layout-hero .hero-photo { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
 .layout-hero .safe { display: flex; flex-direction: column; }
-.layout-hero .hero-photo { flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--paper); }
-.layout-hero .hero-photo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
-.layout-hero .cap-row { display: flex; align-items: baseline; gap: 0.25in; margin-top: 0.22in; }
-.layout-hero .cap-row .date { font-family: var(--sans); font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
-
-/* PAIR: two images side by side */
-.layout-pair .safe { display: flex; flex-direction: column; }
-.layout-pair .pair-row { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4in; min-height: 0; }
-.layout-pair .pair-cell { display: flex; flex-direction: column; }
-.layout-pair .pair-cell .photo { flex: 1; min-height: 0; overflow: hidden; }
-.layout-pair .pair-cell .photo img { width: 100%; height: 100%; }
-.layout-pair .pair-cell .caption { margin-top: 0.16in; }
-
-/* FULL-BLEED: image covers entire paper, caption overlaid */
-.layout-full .bg { position: absolute; inset: 0; }
-.layout-full .bg img { width: 100%; height: 100%; object-fit: cover; }
-.layout-full .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%); }
-.layout-full .cap {
-  position: absolute; left: 0.7in; right: 0.7in; bottom: 0.6in; color: #fff;
-  text-shadow: 0 1px 10px rgba(0,0,0,0.5);
-}
-.layout-full .cap .date { font-family: var(--sans); font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }
-.layout-full .cap .caption { color: #fff; font-size: 15pt; }
-
-/* COLLAGE: scattered, slightly rotated photos */
-.layout-collage .safe { padding: 0.55in 0.6in; }
-.layout-collage .stage { position: absolute; inset: 0; }
-.layout-collage .item { position: absolute; display: flex; flex-direction: column; }
-/* Photo fills the item minus room for caption; contain so nothing is clipped. */
-.layout-collage .item .photo { flex: 1; min-height: 0; overflow: hidden; }
-.layout-collage .item .caption { font-size: 10.5pt; margin-top: 0.06in; text-align: center; }
-.layout-collage .year-tag {
-  position: absolute; top: 0.5in; left: 0.6in; z-index: 50;
-  font-family: var(--sans); font-size: 9pt; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--accent);
-}
-
-/* Small decorative paw / heart markers */
-.marker { position: absolute; width: 0.4in; height: 0.4in; color: var(--accent-soft); opacity: 0.8; }
