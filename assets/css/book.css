@@ -1,0 +1,253 @@
+/* =========================================================================
+   The Story of Us — warm editorial photo book
+   Page: 11in x 8.5in landscape (Letter). Bleed/crop driven by render profile.
+   ========================================================================= */
+
+:root {
+  /* Profile variables injected by the renderer (home vs shop). */
+  --bleed: 0in;
+  --paper-w: 11in;
+  --paper-h: 8.5in;
+
+  /* Warm editorial palette */
+  --ivory: #f6f1e7;
+  --ivory-deep: #efe7d8;
+  --ink: #3a322c;          /* soft charcoal-brown */
+  --ink-soft: #6f655c;
+  --line: #d9cfbf;
+
+  /* Accent: overridden by .accent-sage on <body> */
+  --accent: #b9714e;       /* dusty terracotta */
+  --accent-soft: #e7c9b8;
+
+  --serif: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+  --sans: "Avenir Next", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+}
+
+body.accent-sage {
+  --accent: #7e8c6a;
+  --accent-soft: #cdd4bd;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #888;        /* gray around pages in screen preview only */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  color: var(--ink);
+  font-family: var(--serif);
+}
+
+/* ----- Page shell ----- */
+.page {
+  position: relative;
+  width: var(--paper-w);
+  height: var(--paper-h);
+  background: var(--ivory);
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
+}
+.page:last-child { page-break-after: auto; }
+
+/* The trim box = live page area (paper minus bleed). */
+.trim {
+  position: absolute;
+  top: var(--bleed);
+  left: var(--bleed);
+  right: var(--bleed);
+  bottom: var(--bleed);
+}
+
+/* Safe inner area so nothing important is trimmed near the binding edge. */
+.safe {
+  position: absolute;
+  inset: 0;
+  padding: 0.6in 0.7in;
+}
+
+/* Subtle paper texture via layered gradients (prints lightly). */
+.page::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(140% 120% at 110% 120%, rgba(0,0,0,0.035), transparent 55%);
+  pointer-events: none;
+}
+
+/* ----- Crop marks (shop profile only) ----- */
+.cropmark { position: absolute; background: #000; display: none; }
+body.profile-shop .cropmark { display: block; }
+.cropmark.h { width: 0.18in; height: 0.5pt; }
+.cropmark.v { width: 0.5pt; height: 0.18in; }
+/* corners: each corner gets one h + one v mark at the trim line */
+.cm-tl-h { top: var(--bleed); left: 0; }
+.cm-tl-v { top: 0; left: var(--bleed); }
+.cm-tr-h { top: var(--bleed); right: 0; }
+.cm-tr-v { top: 0; right: var(--bleed); }
+.cm-bl-h { bottom: var(--bleed); left: 0; }
+.cm-bl-v { bottom: 0; left: var(--bleed); }
+.cm-br-h { bottom: var(--bleed); right: 0; }
+.cm-br-v { bottom: 0; right: var(--bleed); }
+
+/* =========================================================================
+   Typography
+   ========================================================================= */
+.kicker {
+  font-family: var(--sans);
+  font-size: 9.5pt;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12pt;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.page-num {
+  position: absolute;
+  bottom: 0.32in; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 8pt;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+
+/* Photo "frame": white mat + soft shadow, gives the placed-photo look. */
+.photo {
+  background: #fff;
+  padding: 0.10in;
+  box-shadow: 0 0.06in 0.22in rgba(0,0,0,0.22);
+  border-radius: 1.5px;
+  /* Flex centering so contained images sit in the middle of the mat. */
+  display: flex; align-items: center; justify-content: center;
+}
+/* Use contain so no faces are ever cropped inside a white-mat frame. */
+.photo img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+/* =========================================================================
+   COVER
+   ========================================================================= */
+.cover .bg { position: absolute; inset: 0; }
+.cover .bg img { width: 100%; height: 100%; object-fit: cover; }
+.cover .scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(40,32,26,0.15) 0%, rgba(40,32,26,0.0) 35%, rgba(40,32,26,0.55) 100%);
+}
+.cover .title-block {
+  position: absolute; left: 0; right: 0; bottom: 1.0in;
+  text-align: center; color: #fff;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.45);
+}
+.cover .title-block .kicker { color: #fff; opacity: 0.9; }
+.cover h1 {
+  font-size: 58pt; font-weight: 600; margin: 0.12in 0 0.05in;
+  letter-spacing: 0.01em;
+}
+.cover .subtitle { font-style: italic; font-size: 20pt; opacity: 0.95; }
+.cover .rule {
+  width: 1.4in; height: 2px; background: var(--accent);
+  margin: 0.22in auto 0; opacity: 0.95;
+}
+
+/* =========================================================================
+   DEDICATION
+   ========================================================================= */
+.dedication .safe { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.dedication .flourish { width: 1.8in; margin-bottom: 0.35in; color: var(--accent); }
+.dedication .body {
+  font-size: 17pt; line-height: 1.7; max-width: 6.6in; color: var(--ink);
+  font-style: italic;
+}
+.dedication .signoff { margin-top: 0.4in; font-size: 13pt; color: var(--ink-soft); letter-spacing: 0.04em; }
+
+/* =========================================================================
+   CAST OF CHARACTERS
+   ========================================================================= */
+.cast .safe { display: flex; flex-direction: column; }
+.cast h2 { font-size: 30pt; margin: 0 0 0.1in; font-weight: 600; }
+.cast .lede { font-style: italic; color: var(--ink-soft); margin: 0 0 0.4in; font-size: 13pt; }
+.cast .grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.35in 0.5in; flex: 1; align-content: center;
+}
+.cast .member { text-align: center; }
+.cast .portrait {
+  width: 1.7in; height: 1.7in; border-radius: 50%;
+  margin: 0 auto 0.14in; overflow: hidden;
+  border: 3px solid #fff; box-shadow: 0 0.05in 0.18in rgba(0,0,0,0.18);
+  background: var(--ivory-deep);
+}
+.cast .portrait img { width: 100%; height: 100%; object-fit: cover; }
+.cast .name { font-size: 15pt; }
+.cast .role { font-family: var(--sans); font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 2px; }
+
+/* =========================================================================
+   YEAR DIVIDER
+   ========================================================================= */
+.year-divider .safe { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 0.6in; align-items: center; }
+.year-divider .numeral {
+  font-size: 120pt; line-height: 0.9; font-weight: 600; color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.year-divider .kicker { display: block; margin-bottom: 0.1in; }
+.year-divider h2 { font-size: 30pt; margin: 0.12in 0 0.18in; font-weight: 600; font-style: italic; color: var(--accent); }
+.year-divider .intro { font-size: 13.5pt; line-height: 1.6; color: var(--ink); max-width: 4.6in; }
+.year-divider .accent-photo { width: 100%; height: 5.6in; }
+.year-divider .accent-photo img { object-position: center 15%; }
+.year-divider .thread { width: 2.2in; height: 2px; background: var(--accent-soft); margin-top: 0.3in; }
+
+/* =========================================================================
+   CONTENT LAYOUTS
+   ========================================================================= */
+
+/* HERO: one dominant image with caption strip */
+.layout-hero .safe { display: flex; flex-direction: column; }
+.layout-hero .hero-photo { flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: var(--paper); }
+.layout-hero .hero-photo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.layout-hero .cap-row { display: flex; align-items: baseline; gap: 0.25in; margin-top: 0.22in; }
+.layout-hero .cap-row .date { font-family: var(--sans); font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+
+/* PAIR: two images side by side */
+.layout-pair .safe { display: flex; flex-direction: column; }
+.layout-pair .pair-row { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4in; min-height: 0; }
+.layout-pair .pair-cell { display: flex; flex-direction: column; }
+.layout-pair .pair-cell .photo { flex: 1; min-height: 0; overflow: hidden; }
+.layout-pair .pair-cell .photo img { width: 100%; height: 100%; }
+.layout-pair .pair-cell .caption { margin-top: 0.16in; }
+
+/* FULL-BLEED: image covers entire paper, caption overlaid */
+.layout-full .bg { position: absolute; inset: 0; }
+.layout-full .bg img { width: 100%; height: 100%; object-fit: cover; }
+.layout-full .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%); }
+.layout-full .cap {
+  position: absolute; left: 0.7in; right: 0.7in; bottom: 0.6in; color: #fff;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+}
+.layout-full .cap .date { font-family: var(--sans); font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }
+.layout-full .cap .caption { color: #fff; font-size: 15pt; }
+
+/* COLLAGE: scattered, slightly rotated photos */
+.layout-collage .safe { padding: 0.55in 0.6in; }
+.layout-collage .stage { position: absolute; inset: 0; }
+.layout-collage .item { position: absolute; display: flex; flex-direction: column; }
+/* Photo fills the item minus room for caption; contain so nothing is clipped. */
+.layout-collage .item .photo { flex: 1; min-height: 0; overflow: hidden; }
+.layout-collage .item .caption { font-size: 10.5pt; margin-top: 0.06in; text-align: center; }
+.layout-collage .year-tag {
+  position: absolute; top: 0.5in; left: 0.6in; z-index: 50;
+  font-family: var(--sans); font-size: 9pt; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--accent);
+}
+
+/* Small decorative paw / heart markers */
+.marker { position: absolute; width: 0.4in; height: 0.4in; color: var(--accent-soft); opacity: 0.8; }

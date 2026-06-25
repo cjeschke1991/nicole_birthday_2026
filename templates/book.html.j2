@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ book.title }}</title>
+<style>
+{{ page_css }}
+{{ book_css }}
+</style>
+</head>
+<body class="profile-{{ profile.name }} accent-{{ book.accent|default('terracotta') }}">
+
+{% macro cropmarks() %}
+  <div class="cropmark h cm-tl-h"></div><div class="cropmark v cm-tl-v"></div>
+  <div class="cropmark h cm-tr-h"></div><div class="cropmark v cm-tr-v"></div>
+  <div class="cropmark h cm-bl-h"></div><div class="cropmark v cm-bl-v"></div>
+  <div class="cropmark h cm-br-h"></div><div class="cropmark v cm-br-v"></div>
+{% endmacro %}
+
+{% for pg in pages %}
+  {% if pg.type == 'cover' %}
+  <section class="page cover">
+    <div class="bg"><img src="{{ pg.bg }}"></div>
+    <div class="scrim"></div>
+    <div class="title-block">
+      {% if pg.kicker %}<div class="kicker">{{ pg.kicker }}</div>{% endif %}
+      <h1>{{ pg.title }}</h1>
+      <div class="rule"></div>
+      {% if pg.subtitle %}<div class="subtitle">{{ pg.subtitle }}</div>{% endif %}
+    </div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'dedication' %}
+  <section class="page dedication">
+    <div class="trim"><div class="safe">
+      <div class="flourish">{{ flourish_svg }}</div>
+      <div class="body">{{ pg.body }}</div>
+      {% if pg.signoff %}<div class="signoff">{{ pg.signoff }}</div>{% endif %}
+    </div></div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'cast' %}
+  <section class="page cast">
+    <div class="trim"><div class="safe">
+      <div class="kicker">The Cast</div>
+      <h2>{{ pg.title }}</h2>
+      <div class="lede">{{ pg.lede }}</div>
+      <div class="grid">
+        {% for m in pg.members %}
+        <div class="member">
+          <div class="portrait"><img src="{{ m.img }}"></div>
+          <div class="name">{{ m.name }}</div>
+          <div class="role">{{ m.role }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div></div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'year-divider' %}
+  <section class="page year-divider">
+    <div class="trim"><div class="safe">
+      <div class="left">
+        <span class="kicker">The Story of Us</span>
+        <div class="numeral">{{ pg.year }}</div>
+        {% if pg.title %}<h2>{{ pg.title }}</h2>{% endif %}
+        {% if pg.intro %}<div class="intro">{{ pg.intro }}</div>{% endif %}
+        <div class="thread"></div>
+      </div>
+      <div class="right">
+        {% if pg.accent_img %}<div class="photo accent-photo"><img src="{{ pg.accent_img }}"></div>{% endif %}
+      </div>
+    </div></div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'content' and pg.layout == 'hero' %}
+  <section class="page layout-hero">
+    <div class="trim"><div class="safe">
+      <div class="photo hero-photo"><img src="{{ pg.img }}"></div>
+      <div class="cap-row">
+        {% if pg.date %}<div class="date">{{ pg.date }}</div>{% endif %}
+        <div class="caption">{{ pg.caption }}</div>
+      </div>
+    </div></div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'content' and pg.layout == 'pair' %}
+  <section class="page layout-pair">
+    <div class="trim"><div class="safe">
+      <div class="pair-row">
+        {% for it in pg.cells %}
+        <div class="pair-cell">
+          <div class="photo"><img src="{{ it.img }}"></div>
+          {% if it.caption %}<div class="caption">{{ it.caption }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div></div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'content' and pg.layout == 'full' %}
+  <section class="page layout-full">
+    <div class="bg"><img src="{{ pg.img }}"></div>
+    <div class="scrim"></div>
+    <div class="cap">
+      {% if pg.date %}<div class="date">{{ pg.date }}</div>{% endif %}
+      <div class="caption">{{ pg.caption }}</div>
+    </div>
+    {{ cropmarks() }}
+  </section>
+
+  {% elif pg.type == 'content' and pg.layout == 'collage' %}
+  <section class="page layout-collage">
+    <div class="trim">
+      <div class="stage">
+        {% if pg.year_tag %}<div class="year-tag">{{ pg.year_tag }}</div>{% endif %}
+        {% for it in pg.shots %}
+        <div class="item" style="top:{{ it.top }}; left:{{ it.left }}; width:{{ it.width }}; height:{{ it.height }}; transform: rotate({{ it.rot }}deg); z-index:{{ it.z }};">
+          <div class="photo"><img src="{{ it.img }}"></div>
+          {% if it.caption %}<div class="caption">{{ it.caption }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {{ cropmarks() }}
+  </section>
+  {% endif %}
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Photos and generated output (large / private)
+photos_raw/**/*
+!photos_raw/**/.gitkeep
+photos_processed/**/*
+!photos_processed/.gitkeep
+!photos_processed/covers/
+!photos_processed/covers/**
+build/**/*
+!build/.gitkeep
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Playwright browsers cache (if local)
+.cache/
+.playwright/
+
+# OS
+.DS_Store

@@ -1,0 +1,29 @@
+{
+  "book": {
+    "title": "The Story of Us",
+    "subtitle": "Clay & Nicole",
+    "dedication": "For Nicole, on your birthday — every page is a thank-you for the life we've built. I love you. — Clay",
+    "accent": "terracotta",
+    "cast": [
+      { "name": "Clay",   "cover": "covers/clay.jpg" },
+      { "name": "Nicole", "cover": "covers/nicole.jpg" },
+      { "name": "Connor", "cover": "covers/connor.jpg" },
+      { "name": "Hailey", "cover": "covers/hailey.jpg" },
+      { "name": "Cooper", "cover": "covers/cooper.jpg" },
+      { "name": "Zoa",    "cover": "covers/zoa.jpg" }
+    ]
+  },
+  "years": [
+    {
+      "year": 2015,
+      "title": "Where It Began",
+      "intro": "The year everything started. (Edit me — add what made this year special.)",
+      "photos": [
+        { "file": "2015/EXAMPLE_hero.jpg",  "caption": "Our first adventure together", "people": ["Clay", "Nicole"], "layout": "hero",      "date": "2015-06-14" },
+        { "file": "2015/EXAMPLE_a.jpg",      "caption": "Edit me",                       "people": ["Clay"],            "layout": "pair",      "date": "2015-08-02" },
+        { "file": "2015/EXAMPLE_b.jpg",      "caption": "Edit me",                       "people": ["Nicole"],          "layout": "pair",      "date": "2015-08-02" },
+        { "file": "2015/EXAMPLE_c.jpg",      "caption": "Edit me",                       "people": ["Clay", "Nicole"],  "layout": "collage",   "date": "2015-11-20" }
+      ]
+    }
+  ]
+}
