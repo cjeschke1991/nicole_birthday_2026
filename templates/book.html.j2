@@ -160,7 +160,7 @@
         </div>
         {% endif %}
         {% if it.caption %}
-        <div class="scatter-caption" style="top:{{ it.cap_top }}; left:{{ it.cap_left }};">{{ it.caption }}</div>
+        <div class="scatter-caption{% if it.cap_width %} scatter-caption-box{% endif %}" style="top:{{ it.cap_top }}; left:{{ it.cap_left }};{% if it.cap_width %} width:{{ it.cap_width }}; max-width:{{ it.cap_width }};{% endif %}">{{ it.caption }}</div>
         {% endif %}
         {% if it.clipart %}
         <div class="scatter-clipart" style="top:{{ it.clip_top }}; left:{{ it.clip_left }}; z-index:{{ it.z + 5 }};">

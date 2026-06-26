@@ -51,10 +51,6 @@ def manifest_path(version: str) -> Path:
     return common.VERSIONS_DIR / version / "scatter_page_manifest.json"
 
 
-def caption_positions_path(version: str) -> Path:
-    return common.VERSIONS_DIR / version / "caption_positions.json"
-
-
 def load_manifest(version: str) -> list[ScatterPage]:
     path = manifest_path(version)
     if not path.is_file():
@@ -71,19 +67,4 @@ def write_manifest(story: dict, version: str) -> Path:
         "version": 1,
         "pages": [asdict(p) for p in pages],
     }, indent=2) + "\n")
-    return path
-
-
-def load_caption_positions(version: str) -> dict[str, dict[str, float]]:
-    path = caption_positions_path(version)
-    if not path.is_file():
-        return {}
-    raw = json.loads(path.read_text())
-    return raw.get("by_photo", {})
-
-
-def write_caption_positions(by_photo: dict[str, dict[str, float]], version: str) -> Path:
-    path = caption_positions_path(version)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"version": 1, "by_photo": by_photo}, indent=2) + "\n")
     return path

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Convert raw Figma scatter pull (pt) → figma-scatter-export.json (stage %).
 
-Slot tuple (9 values):
-  left%, top%, width%, height%, rot°, clipart_left%, clipart_top%, caption_left%, caption_top%
+Slot tuple (11 values):
+  left%, top%, width%, height%, rot°, clipart_left%, clipart_top%,
+  caption_left%, caption_top%, caption_width%, caption_height%
+  (9-value slots without caption box size still supported)
 """
 from __future__ import annotations
 
@@ -46,12 +48,16 @@ def convert(raw: dict) -> dict[str, list[list[float]]]:
             else:
                 cil, cit = left + w_pct * 0.5, top
             if slot.get("caption"):
-                cap_l, cap_t = figma_pt_to_stage_pct(
-                    slot["caption"]["x"], slot["caption"]["y"],
-                )
+                cap = slot["caption"]
+                cap_l, cap_t = figma_pt_to_stage_pct(cap["x"], cap["y"])
+                cap_w, cap_h = _size_pct(cap.get("w", 0), cap.get("h", 0))
+                if cap_w <= 0:
+                    cap_w, cap_h = 22.0, 12.0
             else:
-                cap_l, cap_t = 50.0, 70.0
-            out_slots.append([left, top, w_pct, h_pct, rot, cil, cit, cap_l, cap_t])
+                cap_l, cap_t, cap_w, cap_h = 50.0, 70.0, 22.0, 12.0
+            out_slots.append(
+                [left, top, w_pct, h_pct, rot, cil, cit, cap_l, cap_t, cap_w, cap_h],
+            )
         recipes_out[name] = out_slots
     return recipes_out
 

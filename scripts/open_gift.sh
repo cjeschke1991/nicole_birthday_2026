@@ -10,7 +10,7 @@ VER_ROOT="$ROOT/versions/$VER"
 needs_rebuild() {
   local f newest="$PDF"
   for f in "$VER_ROOT/story.json" "$VER_ROOT/assets/css/book.css" \
-           "$ROOT/scripts/scatter_recipes.json" "$VER_ROOT/caption_positions.json" \
+           "$ROOT/scripts/scatter_recipes.json" \
            "$VER_ROOT"/assets/clipart/*; do
     [[ -e "$f" ]] || continue
     if [[ "$f" -nt "$newest" ]]; then

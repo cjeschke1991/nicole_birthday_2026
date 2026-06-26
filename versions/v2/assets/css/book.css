@@ -464,6 +464,14 @@ html, body {
   padding: 0;
   z-index: 5;
   pointer-events: none;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.scatter-caption-box {
+  width: auto;
+  max-width: none;
+  box-sizing: border-box;
 }
 
 .scatter-clipart {

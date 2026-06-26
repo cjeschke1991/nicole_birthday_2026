@@ -23,7 +23,7 @@ for (const frame of scatterPage.children) {
     slots.push({
       photo: { x: photo.x, y: photo.y, w: photo.width, h: photo.height, rot: photo.rotation },
       clip: clip ? { x: clip.x, y: clip.y } : null,
-      caption: cap ? { x: cap.x, y: cap.y } : null,
+      caption: cap ? { x: cap.x, y: cap.y, w: cap.width, h: cap.height } : null,
     });
   }
   if (slots.length) {

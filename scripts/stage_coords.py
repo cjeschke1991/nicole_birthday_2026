@@ -35,3 +35,19 @@ def stage_pct_to_figma_pt(left_pct: float, top_pct: float) -> tuple[float, float
     x_pt = left + (left_pct / 100.0) * stage_w
     y_pt = top + (top_pct / 100.0) * stage_h
     return x_pt, y_pt
+
+
+def stage_size_pct_to_figma_pt(width_pct: float, height_pct: float) -> tuple[float, float]:
+    """Scatter-stage width/height % → Figma size in pt."""
+    left, top, right, bottom = _inset_pt()
+    stage_w = PAGE_W_PT - left - right
+    stage_h = PAGE_H_PT - top - bottom
+    return width_pct / 100.0 * stage_w, height_pct / 100.0 * stage_h
+
+
+def figma_size_to_stage_pct(w_pt: float, h_pt: float) -> tuple[float, float]:
+    """Figma width/height in pt → scatter-stage %."""
+    left, top, right, bottom = _inset_pt()
+    stage_w = PAGE_W_PT - left - right
+    stage_h = PAGE_H_PT - top - bottom
+    return round(w_pt / stage_w * 100.0, 1), round(h_pt / stage_h * 100.0, 1)

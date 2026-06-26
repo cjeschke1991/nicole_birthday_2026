@@ -11,7 +11,8 @@ Workflow (photos + clipart + captions in one step):
 Or say **"sync scatters"** in Cursor.
 
 Slot tuple: left%, top%, width%, height%, rot°, clipart_left%, clipart_top%,
-            caption_left%, caption_top%  (9 values; 7-value slots still supported)
+            caption_left%, caption_top%, caption_width%, caption_height%
+            (9/11 values; 7-value slots still supported)
 Stage insets match .scatter-stage in versions/v2/assets/css/book.css:
   margin 0.5in left/right, 0.45in top/bottom on 11x8.5in page.
 """

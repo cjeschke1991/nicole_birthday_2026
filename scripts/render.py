@@ -28,7 +28,6 @@ from common import (
     ASSETS_DIR, DEFAULT_VERSION, PLAYWRIGHT_DIR, VersionPaths,
     list_versions, resolve_cover, resolve_photo, set_version,
 )
-from scatter_pages import load_caption_positions
 
 PROFILES = {
     "home": {
@@ -94,6 +93,21 @@ SCATTER_RECIPES: dict[str, list[tuple]] = _load_scatter_recipes()
 DECOR_POOL = ("washi-pink", "washi-blue", "star-burst", "heart-tiny")
 
 
+def scatter_recipe_slots(recipe: str, count: int) -> list[tuple]:
+    """Return `count` slots; pad from defaults when Figma export is incomplete."""
+    slots = list(SCATTER_RECIPES.get(recipe, SCATTER_RECIPES["scatter-a"]))
+    if len(slots) >= count:
+        return slots[:count]
+    fallback = _SCATTER_RECIPES_DEFAULT.get(recipe, _SCATTER_RECIPES_DEFAULT["scatter-a"])
+    print(
+        f"  WARNING: {recipe} has {len(slots)} Figma slot(s) but page needs {count}; "
+        f"using built-in defaults for missing photo(s)",
+    )
+    for i in range(len(slots), count):
+        slots.append(tuple(fallback[i] if i < len(fallback) else fallback[-1]))
+    return slots
+
+
 def _load_scatter_decorations() -> dict:
     path = Path(__file__).parent / "scatter_decorations.json"
     if not path.is_file():
@@ -127,12 +141,24 @@ OVERLAP_MARGIN = 3.0
 CAPTION_BAND_TOP = 68.0  # captions prefer y at/above this line
 
 
-def _estimate_caption_box(caption: str) -> tuple[float, float]:
-    """Conservative caption bounding box in stage % — errs on the large side."""
-    lines = max(1, (len(caption) + 13) // 14)
-    width = CAPTION_MAX_W
-    height = lines * 9.0 + 5.0
-    return width, height
+def _estimate_caption_box(
+    caption: str, width_pct: float | None = None, height_pct: float | None = None,
+) -> tuple[float, float]:
+    """Caption bounding box in stage % — uses Figma box size when provided."""
+    cap_w = width_pct if width_pct is not None else CAPTION_MAX_W
+    if height_pct is not None:
+        return cap_w, height_pct
+    chars_per_line = max(6, int(cap_w * 0.62))
+    lines = max(1, (len(caption) + chars_per_line - 1) // chars_per_line)
+    return cap_w, lines * 9.0 + 5.0
+
+
+def _caption_box_from_slot(slot: tuple) -> tuple[float, float, float | None, float | None]:
+    if len(slot) >= 11:
+        return slot[7], slot[8], slot[9], slot[10]
+    if len(slot) >= 9:
+        return slot[7], slot[8], None, None
+    return 50.0, 70.0, None, None
 
 
 def _rect(x1: float, y1: float, x2: float, y2: float) -> tuple[float, float, float, float]:
@@ -534,25 +560,23 @@ def make_collage(yr: dict, group: list[dict], vp: VersionPaths) -> dict:
 
 def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths,
                  page_id: str = "") -> dict:
-    slots = SCATTER_RECIPES.get(recipe, SCATTER_RECIPES["scatter-a"])
+    slots = scatter_recipe_slots(recipe, len(group))
     photo_rects = [_rotated_photo_rect(*slots[i][:5]) for i in range(len(group))]
     placed_captions: list[tuple] = []
-    cap_overrides = load_caption_positions(vp.name)
     items = []
     for idx, g in enumerate(group):
         slot = slots[idx]
         left, top, w, h, rot, cil, cit = slot[:7]
-        recipe_cap = slot[7:9] if len(slot) >= 9 else None
+        recipe_cap = slot[7:] if len(slot) >= 9 else None
         caption = g.get("caption", "")
-        rel = g["file"]
+        cap_width_pct: float | None = None
+        cap_height_pct: float | None = None
+        recipe_cl, recipe_ct, recipe_cw, recipe_ch = _caption_box_from_slot(slot)
         if caption and recipe_cap:
-            cl, ct = recipe_cap[0], recipe_cap[1]
-            cap_w, cap_h = _estimate_caption_box(caption)
-            placed_captions.append(_rect(cl, ct, cl + cap_w, ct + cap_h))
-        elif caption and rel in cap_overrides:
-            cl = cap_overrides[rel]["left"]
-            ct = cap_overrides[rel]["top"]
-            cap_w, cap_h = _estimate_caption_box(caption)
+            cl, ct, cap_width_pct, cap_height_pct = recipe_cl, recipe_ct, recipe_cw, recipe_ch
+            cap_w, cap_h = _estimate_caption_box(
+                caption, cap_width_pct, cap_height_pct,
+            )
             placed_captions.append(_rect(cl, ct, cl + cap_w, ct + cap_h))
         elif caption:
             cl, ct = scatter_caption_pos(
@@ -563,7 +587,7 @@ def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths,
         else:
             cl, ct = 0.0, 0.0
         theme = g.get("theme", "heart")
-        items.append({
+        cell: dict = {
             "img": photo_uri(g["file"], vp),
             "caption": g.get("caption", ""),
             "date": fmt_date(g.get("date", "")),
@@ -575,7 +599,10 @@ def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths,
             "clipart": clipart_uri(theme, vp),
             "z": idx + 10,
             "edge_shadow": recipe in LEFTMOST_SHADOW_SLOT and idx == LEFTMOST_SHADOW_SLOT[recipe],
-        })
+        }
+        if cap_width_pct is not None:
+            cell["cap_width"] = f"{cap_width_pct}%"
+        items.append(cell)
     return {
         "type": "content",
         "layout": recipe,
