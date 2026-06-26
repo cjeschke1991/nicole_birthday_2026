@@ -25,3 +25,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# OpenAI Image MCP output (generated PNGs)
+Chief-of-Staff/generated-images/

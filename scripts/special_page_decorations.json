@@ -1,0 +1,34 @@
+{
+  "cover": {
+    "corners": true,
+    "slots": [
+      {"left": 62, "top": 6, "rot": 16, "kind": "washi-pink"},
+      {"left": 8, "top": 58, "rot": -10, "kind": "star-burst"},
+      {"left": 78, "top": 68, "rot": 12, "kind": "heart-tiny"}
+    ]
+  },
+  "cast": {
+    "corners": true,
+    "slots": [
+      {"left": 86, "top": 22, "rot": -14, "kind": "washi-blue"},
+      {"left": 4, "top": 34, "rot": 10, "kind": "star-burst"},
+      {"left": 36, "top": 84, "rot": -8, "kind": "heart-tiny"},
+      {"left": 72, "top": 76, "rot": 18, "kind": "washi-pink"}
+    ]
+  },
+  "year-divider": {
+    "corners": true,
+    "slots": [
+      {"left": 90, "top": 6, "rot": 20, "kind": "star-burst"},
+      {"left": 44, "top": 84, "rot": -12, "kind": "washi-blue"},
+      {"left": 6, "top": 72, "rot": 8, "kind": "heart-tiny"}
+    ]
+  },
+  "dedication": {
+    "corners": true,
+    "slots": [
+      {"left": 76, "top": 10, "rot": -14, "kind": "heart-tiny"},
+      {"left": 10, "top": 76, "rot": 10, "kind": "washi-pink"}
+    ]
+  }
+}

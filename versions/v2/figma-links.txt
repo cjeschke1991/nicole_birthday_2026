@@ -1,0 +1,27 @@
+# Figma — Story of Us v2 Scrapbook
+# File: Story of Us — v2 Scrapbook
+# Plan: Pro (unlimited pages)
+
+file_url=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook
+
+# Pages
+#   1. Foundations — color tokens + layout notes
+#   2. Scatter Recipes — scatter-a … scatter-d (photos, clipart, captions)
+#   3. Clipart Board — 13 theme placeholders at 0.55in
+#   4. Special Pages — cover, cast, year-divider mockups
+#   (Caption Layouts page is legacy — use caption-N on Scatter Recipes instead)
+#
+# Micro-decorations (washi tape, stars, hearts) — positions in scripts/scatter_decorations.json
+# Special page corners + decors — scripts/special_page_decorations.json
+# Generate PNGs: .venv/bin/python scripts/generate_decorations.py
+
+# Scatter recipe frames — drag photo-N, clipart-N, caption-N, then say "sync scatters"
+scatter-a=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=1-5
+scatter-b=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-2
+scatter-c=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-11
+scatter-d=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-20
+
+# Special pages
+cover=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-71
+cast=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-73
+year-divider=https://www.figma.com/design/DGlYdXmexOAPZYaBNofb6M/Story-of-Us-v2-Scrapbook?node-id=2-75

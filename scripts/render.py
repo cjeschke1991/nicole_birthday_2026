@@ -18,16 +18,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-
 import common
 from common import (
     ASSETS_DIR, DEFAULT_VERSION, PLAYWRIGHT_DIR, VersionPaths,
     list_versions, resolve_cover, resolve_photo, set_version,
 )
+from scatter_pages import load_caption_positions
 
 PROFILES = {
     "home": {
@@ -55,48 +56,235 @@ COLLAGE_SLOTS = {
 }
 
 # Scatter slot: left%, top%, width%, height%, rot°, clipart%, clipart%
-SCATTER_RECIPES: dict[str, list[tuple]] = {
+# Loaded from scripts/scatter_recipes.json (synced from Figma via figma_to_scatter.py).
+_SCATTER_RECIPES_DEFAULT: dict[str, list[tuple]] = {
     "scatter-a": [
-        (5, 8, 20, 30, -6, 22, 4),
-        (52, 6, 18, 28, 4, 66, 2),
-        (8, 52, 22, 32, 3, 26, 48),
-        (50, 48, 20, 30, -4, 66, 44),
-        (74, 32, 18, 28, 7, 88, 28),
+        (5, 6, 18, 24, -6, 22, 4),
+        (55, 4, 17, 24, 4, 68, 2),
+        (8, 32, 19, 24, 3, 26, 30),
     ],
     "scatter-b": [
-        (62, 8, 19, 29, 5, 76, 4),
-        (38, 18, 20, 30, -3, 54, 14),
-        (10, 38, 21, 31, 4, 28, 34),
-        (55, 45, 18, 28, -5, 70, 40),
-        (28, 58, 20, 30, 6, 44, 56),
+        (62, 6, 17, 24, 5, 76, 4),
+        (36, 14, 18, 24, -3, 52, 10),
+        (10, 32, 19, 24, 4, 28, 28),
     ],
     "scatter-c": [
-        (68, 10, 18, 27, -4, 82, 6),
-        (8, 14, 20, 30, 5, 24, 8),
-        (42, 28, 19, 29, -2, 58, 22),
-        (14, 55, 21, 31, 3, 32, 54),
-        (58, 52, 18, 28, -6, 72, 48),
+        (66, 6, 17, 23, -4, 82, 4),
+        (8, 10, 18, 24, 5, 24, 6),
+        (40, 24, 18, 24, -2, 56, 18),
     ],
     "scatter-d": [
-        (12, 10, 20, 30, 3, 28, 6),
-        (48, 8, 19, 28, -5, 64, 4),
-        (72, 22, 18, 27, 6, 86, 16),
-        (22, 48, 21, 31, -4, 40, 44),
-        (52, 50, 20, 30, 4, 68, 46),
+        (12, 6, 18, 24, 3, 28, 4),
+        (48, 4, 17, 23, -5, 64, 2),
+        (72, 16, 17, 23, 6, 86, 12),
     ],
 }
 
-CAPTION_GAP = 2.5  # percent gap between photo edge and caption box
+
+def _load_scatter_recipes() -> dict[str, list[tuple]]:
+    path = Path(__file__).parent / "scatter_recipes.json"
+    if not path.is_file():
+        return _SCATTER_RECIPES_DEFAULT
+    raw = json.loads(path.read_text())
+    return {name: [tuple(slot) for slot in slots] for name, slots in raw.items()}
 
 
-def scatter_caption_pos(left: float, top: float, w: float, h: float, idx: int) -> tuple[float, float]:
-    """Place caption outside the photo frame — never overlapping the image."""
-    side = idx % 3
-    if side == 0:
-        return left, top + h + CAPTION_GAP
-    if side == 1:
-        return left + w + CAPTION_GAP, top + 1
-    return max(2, left - 22), top + h * 0.15
+SCATTER_RECIPES: dict[str, list[tuple]] = _load_scatter_recipes()
+
+DECOR_POOL = ("washi-pink", "washi-blue", "star-burst", "heart-tiny")
+
+
+def _load_scatter_decorations() -> dict:
+    path = Path(__file__).parent / "scatter_decorations.json"
+    if not path.is_file():
+        return {"recipes": {}, "two_photo_extra": {}}
+    raw = json.loads(path.read_text())
+    return {
+        "recipes": {k: v for k, v in raw.items() if k.startswith("scatter-")},
+        "two_photo_extra": raw.get("two_photo_extra", {}),
+    }
+
+
+SCATTER_DECORATIONS = _load_scatter_decorations()
+
+
+def _load_special_page_decorations() -> dict:
+    path = Path(__file__).parent / "special_page_decorations.json"
+    if not path.is_file():
+        return {}
+    return json.loads(path.read_text())
+
+
+SPECIAL_PAGE_DECORATIONS = _load_special_page_decorations()
+
+# Slot index of the leftmost photo per recipe (needs axis-aligned shadow matte).
+LEFTMOST_SHADOW_SLOT: dict[str, int] = {"scatter-a": 0, "scatter-c": 1}
+
+CAPTION_GAP = 8.0
+CAPTION_MAX_W = 22.0  # percent of scatter-stage width
+POLAROID_PAD = 4.5   # polaroid frame + shadow slack in stage %
+OVERLAP_MARGIN = 3.0
+CAPTION_BAND_TOP = 68.0  # captions prefer y at/above this line
+
+
+def _estimate_caption_box(caption: str) -> tuple[float, float]:
+    """Conservative caption bounding box in stage % — errs on the large side."""
+    lines = max(1, (len(caption) + 13) // 14)
+    width = CAPTION_MAX_W
+    height = lines * 9.0 + 5.0
+    return width, height
+
+
+def _rect(x1: float, y1: float, x2: float, y2: float) -> tuple[float, float, float, float]:
+    return x1, y1, x2, y2
+
+
+def _overlaps(a: tuple, b: tuple, margin: float = OVERLAP_MARGIN) -> bool:
+    ax1, ay1, ax2, ay2 = a
+    bx1, by1, bx2, by2 = b
+    return not (ax2 + margin <= bx1 or bx2 + margin <= ax1 or
+                ay2 + margin <= by1 or by2 + margin <= ay1)
+
+
+def _rotated_photo_rect(
+    left: float, top: float, w: float, h: float, rot_deg: float,
+    pad: float = POLAROID_PAD,
+) -> tuple[float, float, float, float]:
+    """Axis-aligned bbox for a rotated polaroid frame."""
+    cx, cy = left + w / 2, top + h / 2
+    rad = math.radians(abs(rot_deg))
+    cos_a, sin_a = math.cos(rad), math.sin(rad)
+    hw, hh = w / 2 + pad, h / 2 + pad
+    xs: list[float] = []
+    ys: list[float] = []
+    for dx, dy in ((-hw, -hh), (hw, -hh), (hw, hh), (-hw, hh)):
+        xs.append(cx + dx * cos_a - dy * sin_a)
+        ys.append(cy + dx * sin_a + dy * cos_a)
+    return _rect(min(xs), min(ys), max(xs), max(ys))
+
+
+def _caption_fits(
+    cl: float, ct: float, cap_w: float, cap_h: float,
+    photo_rects: list[tuple], placed_captions: list[tuple],
+) -> bool:
+    if not _in_stage(cl, ct, cap_w, cap_h):
+        return False
+    cr = _rect(cl, ct, cl + cap_w, ct + cap_h)
+    if any(_overlaps(cr, pr) for pr in photo_rects):
+        return False
+    if any(_overlaps(cr, c) for c in placed_captions):
+        return False
+    return True
+
+
+def _caption_candidates(
+    left: float, top: float, w: float, h: float, cap_w: float, cap_h: float,
+) -> list[tuple[float, float]]:
+    g = CAPTION_GAP
+    return [
+        (left, top + h + g),                         # below, left-aligned
+        (left + w - cap_w, top + h + g),             # below, right-aligned
+        (left + w + g, top),                         # right, top-aligned
+        (left + w + g, top + h - cap_h),             # right, bottom-aligned
+        (left - cap_w - g, top),                     # left, top-aligned
+        (left - cap_w - g, top + h - cap_h),         # left, bottom-aligned
+        (left, top - cap_h - g),                     # above, left-aligned
+        (left + w - cap_w, top - cap_h - g),         # above, right-aligned
+    ]
+
+
+def _in_stage(x: float, y: float, w: float, h: float) -> bool:
+    margin = 1.5
+    return x >= margin and y >= margin and x + w <= 100 - margin and y + h <= 100 - margin
+
+
+def _min_dist_to_photos(cr: tuple, photo_rects: list[tuple]) -> float:
+    """Minimum edge distance from caption rect to nearest photo rect."""
+    cx1, cy1, cx2, cy2 = cr
+    best = 999.0
+    for px1, py1, px2, py2 in photo_rects:
+        dx = max(px1 - cx2, cx1 - px2, 0)
+        dy = max(py1 - cy2, cy1 - py2, 0)
+        best = min(best, (dx ** 2 + dy ** 2) ** 0.5)
+    return best
+
+
+def _perimeter_anchors(cap_w: float, cap_h: float) -> list[tuple[float, float]]:
+    """Caption origins along page margins (top-left corner of each box)."""
+    m = 2.0
+    bottom = max(CAPTION_BAND_TOP, 96.0 - cap_h)
+    right = max(m, 98.0 - cap_w)
+    anchors: list[tuple[float, float]] = []
+    for x in (m, 26.0, 50.0, 74.0):
+        anchors.append((x, m))
+        anchors.append((x, bottom))
+    for y in (16.0, 38.0, 56.0):
+        anchors.append((m, y))
+        anchors.append((right, y))
+    return anchors
+
+
+def _grid_caption_pos(
+    cap_w: float, cap_h: float,
+    photo_rects: list[tuple], placed_captions: list[tuple],
+) -> tuple[float, float] | None:
+    """Scan caption band and side margins for open whitespace."""
+    best: tuple[float, float] | None = None
+    best_dist = -1.0
+    y_start = int(CAPTION_BAND_TOP)
+    for y in list(range(y_start, int(96 - cap_h), 2)) + list(range(2, y_start, 2)):
+        for x in range(2, int(98 - cap_w), 2):
+            if not _caption_fits(x, y, cap_w, cap_h, photo_rects, placed_captions):
+                continue
+            cr = _rect(x, y, x + cap_w, y + cap_h)
+            dist = _min_dist_to_photos(cr, photo_rects)
+            if dist > best_dist:
+                best_dist = dist
+                best = (x, y)
+    return best
+
+
+def _stack_caption_pos(
+    cap_w: float, cap_h: float,
+    photo_rects: list[tuple], placed_captions: list[tuple],
+) -> tuple[float, float]:
+    """Last resort: stack in left margin, guaranteed collision-checked."""
+    for x in (2.0, 26.0, 50.0, 74.0):
+        for y in range(int(CAPTION_BAND_TOP), int(96 - cap_h), 2):
+            if _caption_fits(x, y, cap_w, cap_h, photo_rects, placed_captions):
+                return x, y
+    for x in (2.0, 74.0):
+        for y in range(2, int(CAPTION_BAND_TOP), 2):
+            if _caption_fits(x, y, cap_w, cap_h, photo_rects, placed_captions):
+                return x, y
+    return 2.0, CAPTION_BAND_TOP
+
+
+def scatter_caption_pos(
+    left: float, top: float, w: float, h: float,
+    caption: str,
+    photo_rects: list[tuple],
+    placed_captions: list[tuple],
+) -> tuple[float, float]:
+    """Pick caption position that clears every photo on the page."""
+    cap_w, cap_h = _estimate_caption_box(caption)
+    px, py = left + w / 2, top + h / 2
+
+    for cl, ct in _caption_candidates(left, top, w, h, cap_w, cap_h):
+        if _caption_fits(cl, ct, cap_w, cap_h, photo_rects, placed_captions):
+            return cl, ct
+
+    anchors = _perimeter_anchors(cap_w, cap_h)
+    anchors.sort(key=lambda a: (a[0] - px) ** 2 + (a[1] - py) ** 2)
+    for cl, ct in anchors:
+        if _caption_fits(cl, ct, cap_w, cap_h, photo_rects, placed_captions):
+            return cl, ct
+
+    pos = _grid_caption_pos(cap_w, cap_h, photo_rects, placed_captions)
+    if pos:
+        return pos
+    return _stack_caption_pos(cap_w, cap_h, photo_rects, placed_captions)
+
 
 ROLE_HINTS = {
     "Clay": "Dad", "Nicole": "Mom", "Connor": "Son", "Hailey": "Daughter",
@@ -126,12 +314,76 @@ def cover_uri(rel: str, vp: VersionPaths) -> str:
 
 def clipart_uri(theme: str, vp: VersionPaths) -> str | None:
     clip_dir = vp.root / "assets" / "clipart"
-    path = clip_dir / f"{theme}.svg"
-    if not path.exists():
-        path = clip_dir / "heart.svg"
+    for ext in (".png", ".svg"):
+        path = clip_dir / f"{theme}{ext}"
+        if path.exists():
+            return to_uri(path)
+    fallback = clip_dir / "heart.png"
+    if not fallback.exists():
+        fallback = clip_dir / "heart.svg"
+    if fallback.exists():
+        return to_uri(fallback)
+    return None
+
+
+def decor_uri(kind: str, vp: VersionPaths) -> str | None:
+    path = vp.root / "assets" / "decor" / f"{kind}.png"
     if path.exists():
         return to_uri(path)
     return None
+
+
+def decor_kind_for(page_id: str, slot_idx: int, hint: str = "auto") -> str:
+    if hint and hint != "auto" and hint in DECOR_POOL:
+        return hint
+    seed = sum(ord(c) for c in page_id) + slot_idx * 7
+    return DECOR_POOL[seed % len(DECOR_POOL)]
+
+
+def build_decor_items(
+    slots: list[dict], page_id: str, vp: VersionPaths, *, z_base: int = 3,
+) -> list[dict]:
+    out: list[dict] = []
+    for idx, slot in enumerate(slots):
+        kind = decor_kind_for(page_id, idx, slot.get("kind", "auto"))
+        uri = decor_uri(kind, vp)
+        if not uri:
+            continue
+        out.append({
+            "img": uri,
+            "kind": kind,
+            "left": f"{slot['left']}%",
+            "top": f"{slot['top']}%",
+            "rot": slot.get("rot", 0),
+            "z": z_base + idx,
+        })
+    return out
+
+
+def scatter_decorations(recipe: str, page_id: str, photo_count: int, vp: VersionPaths) -> list[dict]:
+    slots = list(SCATTER_DECORATIONS["recipes"].get(recipe, []))
+    if photo_count < 3:
+        slots.extend(SCATTER_DECORATIONS["two_photo_extra"].get(recipe, []))
+    return build_decor_items(slots, page_id, vp)
+
+
+def special_page_embellishments(page_key: str, page_id: str, vp: VersionPaths) -> dict | None:
+    cfg = SPECIAL_PAGE_DECORATIONS.get(page_key)
+    if not cfg:
+        return None
+    corner = decor_uri("corner-flourish", vp) if cfg.get("corners") else None
+    decorations = build_decor_items(cfg.get("slots", []), page_id, vp)
+    if not corner and not decorations:
+        return None
+    return {"corner_flourish": corner, "decorations": decorations}
+
+
+def maybe_embellishments(
+    page_key: str, page_id: str, story: dict, vp: VersionPaths,
+) -> dict | None:
+    if story.get("book", {}).get("edition") != "scrapbook":
+        return None
+    return special_page_embellishments(page_key, page_id, vp)
 
 
 def fmt_date(iso: str) -> str:
@@ -159,6 +411,7 @@ def build_pages(story: dict, vp: VersionPaths) -> list[dict]:
             "subtitle": book.get("subtitle", ""),
             "kicker": book.get("kicker", ""),
             "bg": photo_uri(cover_rel, vp),
+            "embellishments": maybe_embellishments("cover", "cover", story, vp),
         })
 
     if book.get("dedication"):
@@ -167,7 +420,12 @@ def build_pages(story: dict, vp: VersionPaths) -> list[dict]:
         if "—" in ded:
             parts = ded.rsplit("—", 1)
             body, signoff = parts[0].strip(), "— " + parts[1].strip()
-        pages.append({"type": "dedication", "body": body, "signoff": signoff})
+        pages.append({
+            "type": "dedication",
+            "body": body,
+            "signoff": signoff,
+            "embellishments": maybe_embellishments("dedication", "dedication", story, vp),
+        })
 
     cast = book.get("cast", [])
     if cast:
@@ -183,16 +441,21 @@ def build_pages(story: dict, vp: VersionPaths) -> list[dict]:
             "title": book.get("cast_title", "Our Little Family"),
             "lede": book.get("cast_lede", "The people (and pups) who make up our story."),
             "members": members,
+            "embellishments": maybe_embellishments("cast", "cast", story, vp),
         })
 
     for yr in story.get("years", []):
         photos = yr.get("photos", [])
+        year = yr["year"]
         pages.append({
             "type": "year-divider",
-            "year": yr["year"],
+            "year": year,
             "title": yr.get("title", ""),
             "intro": yr.get("intro", ""),
             "accent_img": photo_uri(photos[0]["file"], vp) if photos else None,
+            "embellishments": maybe_embellishments(
+                "year-divider", f"year-{year}", story, vp,
+            ),
         })
         pages.extend(layout_year(yr, photos, vp))
 
@@ -236,10 +499,13 @@ def layout_year(yr: dict, photos: list[dict], vp: VersionPaths) -> list[dict]:
         elif layout.startswith("scatter"):
             recipe = layout
             group = []
-            while i < n and photos[i].get("layout") == recipe and len(group) < 5:
+            while i < n and photos[i].get("layout") == recipe and len(group) < 3:
                 group.append(photos[i]); i += 1
             if group:
-                out.append(make_scatter(yr, group, recipe, vp))
+                year = int(yr["year"])
+                seq = sum(1 for pg in out if pg.get("layout", "").startswith("scatter")) + 1
+                page_id = f"{year}-{seq:02d}"
+                out.append(make_scatter(yr, group, recipe, vp, page_id=page_id))
 
         else:
             out.append({"type": "content", "layout": "hero",
@@ -266,12 +532,36 @@ def make_collage(yr: dict, group: list[dict], vp: VersionPaths) -> dict:
             "year_tag": str(yr.get("year", "")), "shots": shots}
 
 
-def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths) -> dict:
+def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths,
+                 page_id: str = "") -> dict:
     slots = SCATTER_RECIPES.get(recipe, SCATTER_RECIPES["scatter-a"])
+    photo_rects = [_rotated_photo_rect(*slots[i][:5]) for i in range(len(group))]
+    placed_captions: list[tuple] = []
+    cap_overrides = load_caption_positions(vp.name)
     items = []
     for idx, g in enumerate(group):
-        left, top, w, h, rot, cil, cit = slots[idx]
-        cl, ct = scatter_caption_pos(left, top, w, h, idx)
+        slot = slots[idx]
+        left, top, w, h, rot, cil, cit = slot[:7]
+        recipe_cap = slot[7:9] if len(slot) >= 9 else None
+        caption = g.get("caption", "")
+        rel = g["file"]
+        if caption and recipe_cap:
+            cl, ct = recipe_cap[0], recipe_cap[1]
+            cap_w, cap_h = _estimate_caption_box(caption)
+            placed_captions.append(_rect(cl, ct, cl + cap_w, ct + cap_h))
+        elif caption and rel in cap_overrides:
+            cl = cap_overrides[rel]["left"]
+            ct = cap_overrides[rel]["top"]
+            cap_w, cap_h = _estimate_caption_box(caption)
+            placed_captions.append(_rect(cl, ct, cl + cap_w, ct + cap_h))
+        elif caption:
+            cl, ct = scatter_caption_pos(
+                left, top, w, h, caption, photo_rects, placed_captions,
+            )
+            cap_w, cap_h = _estimate_caption_box(caption)
+            placed_captions.append(_rect(cl, ct, cl + cap_w, ct + cap_h))
+        else:
+            cl, ct = 0.0, 0.0
         theme = g.get("theme", "heart")
         items.append({
             "img": photo_uri(g["file"], vp),
@@ -283,13 +573,16 @@ def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths) -> 
             "cap_left": f"{cl}%", "cap_top": f"{ct}%",
             "clip_left": f"{cil}%", "clip_top": f"{cit}%",
             "clipart": clipart_uri(theme, vp),
-            "z": idx + 1,
+            "z": idx + 10,
+            "edge_shadow": recipe in LEFTMOST_SHADOW_SLOT and idx == LEFTMOST_SHADOW_SLOT[recipe],
         })
     return {
         "type": "content",
         "layout": recipe,
+        "page_id": page_id,
         "year_tag": str(yr.get("year", "")),
         "cells": items,
+        "decorations": scatter_decorations(recipe, page_id, len(group), vp),
     }
 
 
@@ -328,7 +621,8 @@ def html_to_pdf(html_path: Path, pdf_path: Path) -> None:
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        page.goto(html_path.resolve().as_uri())
+        page.goto(html_path.resolve().as_uri(), wait_until="load")
+        page.evaluate("() => document.fonts.ready")
         page.emulate_media(media="print")
         page.pdf(path=str(pdf_path), prefer_css_page_size=True,
                  print_background=True)

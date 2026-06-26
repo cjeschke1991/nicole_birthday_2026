@@ -1,0 +1,290 @@
+{
+  "pages": {
+    "2015-01": {
+      "caption-1": {
+        "left": 22.9,
+        "top": 12.5
+      },
+      "caption-2": {
+        "left": 73.2,
+        "top": 9.2
+      },
+      "caption-3": {
+        "left": 9.4,
+        "top": 58.2
+      }
+    },
+    "2015-02": {
+      "caption-1": {
+        "left": 66.7,
+        "top": 30.4
+      },
+      "caption-2": {
+        "left": 12.8,
+        "top": 21.1
+      }
+    },
+    "2016-01": {
+      "caption-1": {
+        "left": 66.2,
+        "top": 32.1
+      },
+      "caption-2": {
+        "left": 6.7,
+        "top": 34.6
+      },
+      "caption-3": {
+        "left": 39.3,
+        "top": 50.9
+      }
+    },
+    "2016-02": {
+      "caption-1": {
+        "left": 11.9,
+        "top": 32.5
+      },
+      "caption-2": {
+        "left": 76.0,
+        "top": 16.0
+      }
+    },
+    "2017-01": {
+      "caption-1": {
+        "left": 23.9,
+        "top": 14.7
+      },
+      "caption-2": {
+        "left": 11.8,
+        "top": 58.8
+      },
+      "caption-3": {
+        "left": 75.1,
+        "top": 10.3
+      }
+    },
+    "2017-02": {
+      "caption-1": {
+        "left": 66.5,
+        "top": 32.8
+      },
+      "caption-2": {
+        "left": 11.1,
+        "top": 22.2
+      }
+    },
+    "2018-01": {
+      "caption-1": {
+        "left": 67.2,
+        "top": 34.3
+      },
+      "caption-2": {
+        "left": 9.6,
+        "top": 36.5
+      },
+      "caption-3": {
+        "left": 40.0,
+        "top": 56.0
+      }
+    },
+    "2018-02": {
+      "caption-1": {
+        "left": 13.5,
+        "top": 32.8
+      },
+      "caption-2": {
+        "left": 67.8,
+        "top": 14.2
+      }
+    },
+    "2019-01": {
+      "caption-1": {
+        "left": 22.9,
+        "top": 12.7
+      },
+      "caption-2": {
+        "left": 8.1,
+        "top": 60.2
+      },
+      "caption-3": {
+        "left": 55.7,
+        "top": 30.3
+      }
+    },
+    "2019-02": {
+      "caption-1": {
+        "left": 66.9,
+        "top": 32.1
+      },
+      "caption-2": {
+        "left": 35.7,
+        "top": 43.1
+      },
+      "caption-3": {
+        "left": 8.1,
+        "top": 19.8
+      }
+    },
+    "2020-01": {
+      "caption-1": {
+        "left": 67.1,
+        "top": 33.2
+      },
+      "caption-2": {
+        "left": 8.9,
+        "top": 36.8
+      },
+      "caption-3": {
+        "left": 38.9,
+        "top": 12.2
+      }
+    },
+    "2021-01": {
+      "caption-1": {
+        "left": 11.9,
+        "top": 33.2
+      },
+      "caption-2": {
+        "left": 47.9,
+        "top": 29.9
+      }
+    },
+    "2021-02": {
+      "caption-1": {
+        "left": 3.9,
+        "top": 36.8
+      },
+      "caption-2": {
+        "left": 57.2,
+        "top": 30.3
+      }
+    },
+    "2022-01": {
+      "caption-1": {
+        "left": 66.7,
+        "top": 32.5
+      },
+      "caption-2": {
+        "left": 36.7,
+        "top": 41.2
+      },
+      "caption-3": {
+        "left": 10.0,
+        "top": 20.2
+      }
+    },
+    "2022-02": {
+      "caption-1": {
+        "left": 64.7,
+        "top": 33.2
+      },
+      "caption-2": {
+        "left": 11.2,
+        "top": 36.5
+      }
+    },
+    "2023-01": {
+      "caption-1": {
+        "left": 43.9,
+        "top": 33.4
+      },
+      "caption-2": {
+        "left": 75.1,
+        "top": 41.0
+      },
+      "caption-3": {
+        "left": 12.6,
+        "top": 32.3
+      }
+    },
+    "2023-02": {
+      "caption-1": {
+        "left": 1.9,
+        "top": 34.6
+      },
+      "caption-2": {
+        "left": 55.0,
+        "top": 31.4
+      }
+    },
+    "2024-01": {
+      "caption-1": {
+        "left": 66.5,
+        "top": 33.0
+      },
+      "caption-2": {
+        "left": 37.2,
+        "top": 43.1
+      },
+      "caption-3": {
+        "left": 9.0,
+        "top": 19.5
+      }
+    },
+    "2024-02": {
+      "caption-1": {
+        "left": 65.7,
+        "top": 34.6
+      },
+      "caption-2": {
+        "left": 10.4,
+        "top": 37.9
+      }
+    },
+    "2025-01": {
+      "caption-1": {
+        "left": 7.9,
+        "top": 34.5
+      },
+      "caption-2": {
+        "left": 42.8,
+        "top": 33.0
+      },
+      "caption-3": {
+        "left": 76.2,
+        "top": 43.2
+      }
+    },
+    "2025-02": {
+      "caption-1": {
+        "left": 22.9,
+        "top": 13.6
+      },
+      "caption-2": {
+        "left": 73.2,
+        "top": 10.3
+      },
+      "caption-3": {
+        "left": 29.6,
+        "top": 43.4
+      }
+    },
+    "2026-01": {
+      "caption-1": {
+        "left": 64.7,
+        "top": 33.4
+      },
+      "caption-2": {
+        "left": 35.0,
+        "top": 43.1
+      },
+      "caption-3": {
+        "left": 9.0,
+        "top": 20.0
+      }
+    },
+    "2026-02": {
+      "caption-1": {
+        "left": 65.7,
+        "top": 33.9
+      },
+      "caption-2": {
+        "left": 6.7,
+        "top": 36.1
+      },
+      "caption-3": {
+        "left": 37.5,
+        "top": 13.8
+      }
+    }
+  }
+}

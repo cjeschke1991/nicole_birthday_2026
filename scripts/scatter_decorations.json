@@ -1,0 +1,44 @@
+{
+  "scatter-a": [
+    {"left": 76, "top": 78, "rot": -14, "kind": "auto"},
+    {"left": 42, "top": 82, "rot": 6, "kind": "auto"},
+    {"left": 90, "top": 6, "rot": 20, "kind": "auto"},
+    {"left": 2, "top": 86, "rot": -8, "kind": "auto"}
+  ],
+  "scatter-b": [
+    {"left": 4, "top": 76, "rot": 12, "kind": "auto"},
+    {"left": 82, "top": 68, "rot": -8, "kind": "auto"},
+    {"left": 48, "top": 86, "rot": -18, "kind": "auto"},
+    {"left": 92, "top": 10, "rot": 14, "kind": "auto"}
+  ],
+  "scatter-c": [
+    {"left": 30, "top": 80, "rot": -10, "kind": "auto"},
+    {"left": 88, "top": 52, "rot": 18, "kind": "auto"},
+    {"left": 52, "top": 6, "rot": -22, "kind": "auto"},
+    {"left": 2, "top": 82, "rot": 8, "kind": "auto"}
+  ],
+  "scatter-d": [
+    {"left": 34, "top": 78, "rot": -6, "kind": "auto"},
+    {"left": 6, "top": 62, "rot": 14, "kind": "auto"},
+    {"left": 90, "top": 76, "rot": 16, "kind": "auto"},
+    {"left": 22, "top": 40, "rot": -12, "kind": "auto"}
+  ],
+  "two_photo_extra": {
+    "scatter-a": [
+      {"left": 88, "top": 38, "rot": 22, "kind": "auto"},
+      {"left": 14, "top": 52, "rot": -10, "kind": "auto"}
+    ],
+    "scatter-b": [
+      {"left": 78, "top": 42, "rot": -16, "kind": "auto"},
+      {"left": 12, "top": 58, "rot": 10, "kind": "auto"}
+    ],
+    "scatter-c": [
+      {"left": 4, "top": 48, "rot": 10, "kind": "auto"},
+      {"left": 70, "top": 84, "rot": -14, "kind": "auto"}
+    ],
+    "scatter-d": [
+      {"left": 58, "top": 72, "rot": -12, "kind": "auto"},
+      {"left": 38, "top": 52, "rot": 18, "kind": "auto"}
+    ]
+  }
+}

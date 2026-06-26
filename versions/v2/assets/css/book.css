@@ -5,6 +5,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@400;600&display=swap');
 
+@font-face {
+  font-family: "Gloria Hallelujah";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/GloriaHallelujah-Regular.woff2") format("woff2");
+}
+
 :root {
   --bleed: 0in;
   --paper-w: 11in;
@@ -19,6 +27,7 @@
   --accent-warm: #e8927a;
 
   --caption: "Caveat", "Comic Sans MS", cursive;
+  --caption-fun: "Gloria Hallelujah", "Comic Sans MS", cursive;
   --body: "Nunito", "Avenir Next", system-ui, sans-serif;
   --serif: Georgia, "Times New Roman", serif;
 }
@@ -87,28 +96,47 @@ html, body {
 }
 
 /* ----- Cover (scrapbook) ----- */
-.edition-scrapbook .page.cover .bg img {
-  width: 42%;
-  height: auto;
-  max-height: 55%;
-  object-fit: contain;
-  position: absolute;
-  top: 18%;
-  right: 12%;
-  transform: rotate(3deg);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-  border: 6px solid #fff;
-}
 .edition-scrapbook .page.cover .bg {
   position: absolute; inset: 0;
   background: var(--paper);
+  z-index: 2;
+}
+.edition-scrapbook .page.cover .hero-polaroid {
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  width: 3.5in;
+  padding: 8px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  transform: rotate(3deg);
+}
+.edition-scrapbook .page.cover .hero-polaroid::before {
+  content: "";
+  position: absolute;
+  top: -0.12in;
+  left: 0.35in;
+  width: 0.55in;
+  height: 0.18in;
+  background: rgba(242, 235, 224, 0.9);
+  border: 0.5px solid var(--line);
+  transform: rotate(-8deg);
+  z-index: 2;
+}
+.edition-scrapbook .page.cover .hero-polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 4.2in;
+  object-fit: cover;
 }
 .edition-scrapbook .page.cover .scrim { display: none; }
 .edition-scrapbook .page.cover .title-block {
   position: absolute;
   left: 8%;
   top: 28%;
-  max-width: 42%;
+  max-width: 44%;
+  z-index: 3;
 }
 .edition-scrapbook .page.cover .kicker {
   font-family: var(--caption);
@@ -117,23 +145,57 @@ html, body {
 }
 .edition-scrapbook .page.cover h1 {
   font-family: var(--caption);
-  font-size: 52pt;
+  font-size: 56pt;
   font-weight: 700;
   line-height: 1;
-  margin: 0.1in 0;
+  margin: 0.08in 0;
   color: var(--ink);
 }
 .edition-scrapbook .page.cover .subtitle {
   font-family: var(--caption);
-  font-size: 26pt;
+  font-size: 28pt;
   color: var(--accent);
 }
 .edition-scrapbook .page.cover .rule {
   width: 1.2in;
   height: 3px;
   background: var(--accent-warm);
-  margin: 0.2in 0;
+  margin: 0.18in 0;
   border-radius: 2px;
+}
+
+/* ----- Special page embellishments (corners + scatter-style decors) ----- */
+.page-embellishments {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-decor-layer {
+  position: absolute;
+  inset: 0.45in 0.5in;
+  overflow: visible;
+}
+
+.corner-flourish {
+  position: absolute;
+  width: 1.35in;
+  height: 1.35in;
+  opacity: 0.5;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.06));
+}
+
+.corner-flourish--tl { top: 0.18in; left: 0.2in; }
+.corner-flourish--tr { top: 0.18in; right: 0.2in; transform: scaleX(-1); }
+.corner-flourish--bl { bottom: 0.18in; left: 0.2in; transform: scaleY(-1); }
+.corner-flourish--br { bottom: 0.18in; right: 0.2in; transform: scale(-1, -1); }
+
+.edition-scrapbook .page.cast .trim,
+.edition-scrapbook .page.year-divider .trim,
+.edition-scrapbook .page.dedication .trim {
+  z-index: 2;
 }
 
 /* ----- Dedication ----- */
@@ -160,6 +222,10 @@ html, body {
 }
 
 /* ----- Cast (polaroid scatter) ----- */
+.edition-scrapbook .page.cast .safe {
+  display: flex;
+  flex-direction: column;
+}
 .edition-scrapbook .page.cast .kicker {
   font-family: var(--caption);
   font-size: 18pt;
@@ -168,33 +234,44 @@ html, body {
 .edition-scrapbook .page.cast h2 {
   font-family: var(--caption);
   font-size: 36pt;
-  margin: 0 0 0.1in;
+  margin: 0 0 0.06in;
+  line-height: 1.05;
 }
 .edition-scrapbook .page.cast .lede {
   font-size: 11pt;
   color: var(--ink-soft);
-  margin-bottom: 0.35in;
+  margin-bottom: 0.15in;
 }
 .edition-scrapbook .page.cast .grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35in;
-  justify-content: center;
+  position: relative;
+  flex: 1;
+  min-height: 5.2in;
 }
 .edition-scrapbook .page.cast .member {
-  width: 1.65in;
+  position: absolute;
+  width: 1.55in;
   text-align: center;
 }
+.edition-scrapbook .page.cast .member:nth-child(1) { left: 2%;  top: 6%;  }
+.edition-scrapbook .page.cast .member:nth-child(2) { left: 24%; top: 2%;  }
+.edition-scrapbook .page.cast .member:nth-child(3) { left: 46%; top: 7%;  }
+.edition-scrapbook .page.cast .member:nth-child(4) { left: 68%; top: 3%;  }
+.edition-scrapbook .page.cast .member:nth-child(5) { left: 15%; top: 48%; }
+.edition-scrapbook .page.cast .member:nth-child(6) { left: 54%; top: 46%; }
 .edition-scrapbook .page.cast .portrait {
-  width: 1.55in;
-  height: 1.55in;
+  width: 1.45in;
+  height: 1.35in;
   margin: 0 auto;
   padding: 5px;
   background: #fff;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-  transform: rotate(-2deg);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
-.edition-scrapbook .page.cast .member:nth-child(even) .portrait { transform: rotate(2deg); }
+.edition-scrapbook .page.cast .member:nth-child(1) .portrait { transform: rotate(-4deg); }
+.edition-scrapbook .page.cast .member:nth-child(2) .portrait { transform: rotate(3deg); }
+.edition-scrapbook .page.cast .member:nth-child(3) .portrait { transform: rotate(-2deg); }
+.edition-scrapbook .page.cast .member:nth-child(4) .portrait { transform: rotate(2deg); }
+.edition-scrapbook .page.cast .member:nth-child(5) .portrait { transform: rotate(3deg); }
+.edition-scrapbook .page.cast .member:nth-child(6) .portrait { transform: rotate(-3deg); }
 .edition-scrapbook .page.cast .portrait img {
   width: 100%;
   height: 100%;
@@ -202,8 +279,8 @@ html, body {
 }
 .edition-scrapbook .page.cast .name {
   font-family: var(--caption);
-  font-size: 18pt;
-  margin-top: 0.08in;
+  font-size: 16pt;
+  margin-top: 0.1in;
 }
 .edition-scrapbook .page.cast .role {
   font-size: 9pt;
@@ -214,53 +291,88 @@ html, body {
 .edition-scrapbook .page.year-divider .safe {
   display: flex;
   align-items: center;
-  gap: 0.5in;
+  gap: 0.55in;
 }
-.edition-scrapbook .page.year-divider .left { flex: 1; }
+.edition-scrapbook .page.year-divider .left {
+  flex: 1;
+  position: relative;
+  max-width: 55%;
+}
+.edition-scrapbook .page.year-divider .left::before {
+  content: attr(data-year);
+  position: absolute;
+  right: -0.1in;
+  top: 0.15in;
+  font-family: var(--caption);
+  font-size: 140pt;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--line);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+.edition-scrapbook .page.year-divider .left > * {
+  position: relative;
+  z-index: 1;
+}
 .edition-scrapbook .page.year-divider .kicker {
   font-family: var(--body);
   font-size: 8pt;
+  font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
+  display: block;
+  margin-bottom: 0.12in;
 }
 .edition-scrapbook .page.year-divider .numeral {
   font-family: var(--caption);
-  font-size: 72pt;
+  font-size: 84pt;
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.95;
   color: var(--accent-warm);
+  margin-bottom: 0.06in;
 }
 .edition-scrapbook .page.year-divider h2 {
   font-family: var(--caption);
-  font-size: 28pt;
+  font-size: 32pt;
+  font-weight: 600;
   color: var(--accent);
-  margin: 0.05in 0;
+  margin: 0.08in 0;
+  line-height: 1.1;
 }
 .edition-scrapbook .page.year-divider .intro {
-  font-size: 10pt;
-  line-height: 1.5;
+  font-size: 11pt;
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 4.5in;
+  max-width: 4.6in;
 }
 .edition-scrapbook .page.year-divider .thread {
-  width: 0.8in;
+  width: 1.2in;
   height: 3px;
   background: var(--accent-warm);
-  margin-top: 0.2in;
+  margin-top: 0.25in;
   border-radius: 2px;
 }
+.edition-scrapbook .page.year-divider .right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .edition-scrapbook .page.year-divider .accent-photo {
-  width: 2.2in;
+  width: 2.35in;
   padding: 6px;
   background: #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transform: rotate(4deg);
 }
 .edition-scrapbook .page.year-divider .accent-photo img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  max-height: 2.8in;
+  object-fit: cover;
 }
 
 /* ----- Scatter content pages ----- */
@@ -269,9 +381,15 @@ html, body {
   inset: var(--bleed);
 }
 
+/* Scatter pages: don't clip polaroid shadows/borders near page edges */
+.page.layout-scatter {
+  overflow: visible;
+}
+
 .scatter-stage {
   position: absolute;
   inset: 0.45in 0.5in;
+  overflow: visible;
 }
 
 .scatter-year {
@@ -289,7 +407,31 @@ html, body {
   position: absolute;
   padding: 5px;
   background: #fff;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.11);
+  border: 1px solid rgba(221, 208, 192, 0.9);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.11);
+  z-index: 2;
+}
+
+/* Leftmost scatter-a / scatter-c photos: non-rotated matte so shadow isn't clipped */
+.scatter-photo-slot {
+  position: absolute;
+  overflow: visible;
+}
+
+.scatter-photo-slot .scatter-photo-matte {
+  position: absolute;
+  inset: -10px;
+  background: rgba(221, 208, 192, 0.42);
+  border-radius: 2px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scatter-photo-slot .scatter-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .scatter-photo .photo {
@@ -309,34 +451,65 @@ html, body {
 
 .scatter-caption {
   position: absolute;
-  max-width: 2.2in;
-  font-family: var(--caption);
+  max-width: 2.3in;
+  width: max-content;
+  font-family: var(--caption-fun);
   font-size: 17pt;
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: 400;
+  line-height: 1.28;
+  text-align: center;
   color: var(--ink);
-  background: var(--paper);
-  padding: 0.05in 0.1in;
-  border-radius: 4px;
-  box-decoration-break: clone;
+  letter-spacing: 0.01em;
+  background: none;
+  padding: 0;
+  z-index: 5;
+  pointer-events: none;
 }
 
 .scatter-clipart {
   position: absolute;
-  width: 0.55in;
-  height: 0.55in;
-  opacity: 0.85;
+  width: 0.72in;
+  height: 0.72in;
+  opacity: 1;
 }
 
 .scatter-clipart img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.scatter-decor {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.scatter-decor img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.scatter-decor-washi-pink,
+.scatter-decor-washi-blue {
+  width: 2.3in;
+  height: 0.48in;
+}
+
+.scatter-decor-star-burst {
+  width: 0.84in;
+  height: 0.84in;
+}
+
+.scatter-decor-heart-tiny {
+  width: 0.68in;
+  height: 0.68in;
 }
 
 /* Slight recipe-specific vibes */
-.scatter-a .scatter-photo:nth-child(odd) { border-bottom: 3px solid var(--accent-warm); }
-.scatter-b .scatter-photo { border-left: 3px solid var(--accent); }
 .scatter-c .scatter-caption { color: var(--accent); }
 .scatter-d .scatter-photo { border-radius: 2px; }
 

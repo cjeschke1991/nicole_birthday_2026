@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "id": "2015-01",
+      "year": 2015,
+      "recipe": "scatter-a",
+      "photos": [
+        "2015/2015-09-26_IMG_0565_a4122a.jpg",
+        "2015/2015-05-15_IMG_0395_f83002.jpg",
+        "2015/2015-05-16_IMG_0411_a9bfeb.jpg"
+      ],
+      "captions": [
+        "Our first Cubs game together \u2014 the first of so many.",
+        "Out on the town.",
+        "All dressed up."
+      ]
+    },
+    {
+      "id": "2015-02",
+      "year": 2015,
+      "recipe": "scatter-b",
+      "photos": [
+        "2015/2015-05-22_IMG_0428_532d8c.jpg",
+        "2015/2015-08-14_IMG_0492_8afa5e.jpg"
+      ],
+      "captions": [
+        "Festival season.",
+        "Front row, ears ringing, grinning."
+      ]
+    },
+    {
+      "id": "2016-01",
+      "year": 2016,
+      "recipe": "scatter-c",
+      "photos": [
+        "2016/2016-04-16_IMG_0733_cd463b.jpg",
+        "2016/2016-03-22_IMG_0717_3a4ced.jpg",
+        "2016/2016-07-02_IMG_0792_d9e452.jpg"
+      ],
+      "captions": [
+        "Cubs jerseys, Wrigley Field.",
+        "Blackhawks nights.",
+        "Chicago river cruise."
+      ]
+    },
+    {
+      "id": "2016-02",
+      "year": 2016,
+      "recipe": "scatter-d",
+      "photos": [
+        "2016/2016-07-02_IMG_0781_64e194.jpg",
+        "2016/2016-07-16_IMG_0803_72145d.jpg"
+      ],
+      "captions": [
+        "City lights.",
+        "Out on the water."
+      ]
+    },
+    {
+      "id": "2017-01",
+      "year": 2017,
+      "recipe": "scatter-a",
+      "photos": [
+        "covers/kickapoo_engagement.jpg",
+        "2017/2017-05-20_IMG_1115_04172b.jpg",
+        "2017/2017-05-13_IMG_1104_81141c.jpg"
+      ],
+      "captions": [
+        "Engaged at Kickapoo State Park \u2014 February 22, 2017.",
+        "A night above the city.",
+        "Date night."
+      ]
+    },
+    {
+      "id": "2017-02",
+      "year": 2017,
+      "recipe": "scatter-b",
+      "photos": [
+        "2017/2017-05-20_IMG_1130_79b23d.jpg",
+        "2017/2017-05-20_IMG_1132_32a727.jpg"
+      ],
+      "captions": [
+        "Dinner for two.",
+        "Dressed to the nines."
+      ]
+    },
+    {
+      "id": "2018-01",
+      "year": 2018,
+      "recipe": "scatter-c",
+      "photos": [
+        "2018/2018-06-30_IMG_1852_7bc854.jpg",
+        "2018/2018-01-10_IMG_1474_fee0d9.jpg",
+        "2018/2018-05-05_IMG_1672_4f9e8c.jpg"
+      ],
+      "captions": [
+        "The city felt like it belonged to us.",
+        "Out with our people.",
+        "Wedding-guest season."
+      ]
+    },
+    {
+      "id": "2018-02",
+      "year": 2018,
+      "recipe": "scatter-d",
+      "photos": [
+        "2018/2018-06-24_IMG_1805_2be051.jpg",
+        "2018/2018-01-10_IMG_1478_a56a99.jpg"
+      ],
+      "captions": [
+        "Good friends, late nights.",
+        "Us, always."
+      ]
+    },
+    {
+      "id": "2019-01",
+      "year": 2019,
+      "recipe": "scatter-a",
+      "photos": [
+        "2020/2020-12-22_IMG_5285_36f369.jpg",
+        "covers/punta_cana_parrot.jpg",
+        "2019/2019-06-06_IMG_2244_f4a904.jpg"
+      ],
+      "captions": [
+        "We said 'I do.' \u2014 June 1, 2019.",
+        "Honeymoon in Punta Cana.",
+        "She made a feathered friend."
+      ]
+    },
+    {
+      "id": "2019-02",
+      "year": 2019,
+      "recipe": "scatter-b",
+      "photos": [
+        "2019/2019-06-07_IMG_0756_28aa9a.jpg",
+        "2019/2019-06-08_IMG_2253_f55d04.jpg",
+        "2019/2019-06-05_IMG_2186_deab88.jpg"
+      ],
+      "captions": [
+        "Sun, sand, and newlyweds.",
+        "Paradise, party of two.",
+        "Morning walks by the water."
+      ]
+    },
+    {
+      "id": "2020-01",
+      "year": 2020,
+      "recipe": "scatter-c",
+      "photos": [
+        "2020/2020-07-02_IMG_3839_8db1b9.jpg",
+        "2020/2020-05-27_IMG_3397_f17441.jpg",
+        "2020/2020-06-14_IMG_3568_fd0280.jpg"
+      ],
+      "captions": [
+        "Our first summer as newlyweds.",
+        "Auntie duties \u2014 practicing for someday.",
+        "Quiet days, close to home."
+      ]
+    },
+    {
+      "id": "2021-01",
+      "year": 2021,
+      "recipe": "scatter-d",
+      "photos": [
+        "2021/2021-07-18_IMG_7298_4b6982.jpg",
+        "2021/2021-07-03_IMG_7220_7a4493.jpg"
+      ],
+      "captions": [
+        "Married life looked a lot like this \u2014 close, and always laughing.",
+        "Dressed up for someone's big day."
+      ]
+    },
+    {
+      "id": "2021-02",
+      "year": 2021,
+      "recipe": "scatter-a",
+      "photos": [
+        "2021/2021-09-11_IMG_7801_a5fb59.jpg",
+        "2021/2021-06-15_IMG_6908_8073f4.jpg"
+      ],
+      "captions": [
+        "Ballgame, shades on.",
+        "Catching our breath."
+      ]
+    },
+    {
+      "id": "2022-01",
+      "year": 2022,
+      "recipe": "scatter-b",
+      "photos": [
+        "covers/cooper_coming_home.jpg",
+        "2022/2022-09-12_IMG_0322_93b682.jpg",
+        "2022/2022-05-06_IMG_9167_1982db.jpg"
+      ],
+      "captions": [
+        "Welcome home, Cooper.",
+        "Puppy's first ride home.",
+        "Out on the water."
+      ]
+    },
+    {
+      "id": "2022-02",
+      "year": 2022,
+      "recipe": "scatter-c",
+      "photos": [
+        "2022/2022-08-07_IMG_0012_3462e5.jpg",
+        "2022/2022-09-02_IMG_0159_c8b361.jpg"
+      ],
+      "captions": [
+        "Wrigley, our happy place.",
+        "Date night."
+      ]
+    },
+    {
+      "id": "2023-01",
+      "year": 2023,
+      "recipe": "scatter-d",
+      "photos": [
+        "covers/connor_welcome.jpg",
+        "covers/connor_welcome.jpg",
+        "2023/2023-10-24_IMG_3238_d928f3.jpg"
+      ],
+      "captions": [
+        "Bringing Connor home.",
+        "Hello, Connor. Born October 15, 2023.",
+        "Tiny and brand new."
+      ]
+    },
+    {
+      "id": "2023-02",
+      "year": 2023,
+      "recipe": "scatter-a",
+      "photos": [
+        "2023/2023-11-13_IMG_3484_cf6a75.jpg",
+        "2023/2023-12-25_IMG_3908_047083.jpg"
+      ],
+      "captions": [
+        "Snuggles with our newest.",
+        "Connor's first Christmas."
+      ]
+    },
+    {
+      "id": "2024-01",
+      "year": 2024,
+      "recipe": "scatter-b",
+      "photos": [
+        "covers/wrigley_family_2024.jpg",
+        "2024/2024-03-31_IMG_5393_ea1472.jpg",
+        "2024/2024-07-05_IMG_1332_e6e34f.jpg"
+      ],
+      "captions": [
+        "Connor's first Wrigley game.",
+        "Easter morning.",
+        "Ballgame with the crew."
+      ]
+    },
+    {
+      "id": "2024-02",
+      "year": 2024,
+      "recipe": "scatter-c",
+      "photos": [
+        "2024/2024-11-10_IMG_8023_f095e5.jpg",
+        "2024/2024-01-21_IMG_4378_1cfa0c.jpg"
+      ],
+      "captions": [
+        "Connor's first hockey game.",
+        "Lazy Sunday at home."
+      ]
+    },
+    {
+      "id": "2025-01",
+      "year": 2025,
+      "recipe": "scatter-d",
+      "photos": [
+        "2025/2025-07-17_IMG_0952_428068.jpg",
+        "2025/2025-01-17_IMG_3820_1f32bd.jpg",
+        "2025/2025-05-04_IMG_9896_b15c03.jpg"
+      ],
+      "captions": [
+        "Hello, Hailey. Born July 17, 2025.",
+        "Adventures, party of three.",
+        "A day at the zoo."
+      ]
+    },
+    {
+      "id": "2025-02",
+      "year": 2025,
+      "recipe": "scatter-a",
+      "photos": [
+        "2025/2025-08-19_IMG_1823_40795e.jpg",
+        "2025/2025-11-14_IMG_3384_00cb8e.jpg",
+        "2025/2025-12-31_IMG_4014_7d4826.jpg"
+      ],
+      "captions": [
+        "Life as four \u2014 plus Zoa.",
+        "All four of us, exactly where we belong.",
+        "Ringing in the new year as four."
+      ]
+    },
+    {
+      "id": "2026-01",
+      "year": 2026,
+      "recipe": "scatter-b",
+      "photos": [
+        "2026/2026-01-18_IMG_4105_6e56d8.jpg",
+        "2026/2026-01-22_IMG_4142_17182d.jpg",
+        "2026/2026-01-25_IMG_4165_30bd5c.jpg"
+      ],
+      "captions": [
+        "Brother and sister.",
+        "Connor and Zoa, partners in crime.",
+        "Hailey's first game."
+      ]
+    },
+    {
+      "id": "2026-02",
+      "year": 2026,
+      "recipe": "scatter-c",
+      "photos": [
+        "2026/2026-04-18_IMG_5068_dbd0cc.jpg",
+        "2026/2026-05-03_family_lawn.jpg",
+        "2026/2026-06-03_IMG_6543_7733f6.jpg"
+      ],
+      "captions": [
+        "Wrigley Field, party of four.",
+        "Mom, Hailey, Cooper, and Zoa \u2014 a perfect spring afternoon.",
+        "Snack break with Dad."
+      ]
+    }
+  ]
+}

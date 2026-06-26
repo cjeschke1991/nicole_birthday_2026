@@ -17,10 +17,33 @@
   <div class="cropmark h cm-br-h"></div><div class="cropmark v cm-br-v"></div>
 {% endmacro %}
 
+{% macro page_embellishments(pg) %}
+{% if pg.embellishments %}
+<div class="page-embellishments">
+  {% if pg.embellishments.corner_flourish %}
+  <img class="corner-flourish corner-flourish--tl" src="{{ pg.embellishments.corner_flourish }}" alt="">
+  <img class="corner-flourish corner-flourish--tr" src="{{ pg.embellishments.corner_flourish }}" alt="">
+  <img class="corner-flourish corner-flourish--bl" src="{{ pg.embellishments.corner_flourish }}" alt="">
+  <img class="corner-flourish corner-flourish--br" src="{{ pg.embellishments.corner_flourish }}" alt="">
+  {% endif %}
+  <div class="page-decor-layer">
+    {% for dec in pg.embellishments.decorations %}
+    <div class="scatter-decor scatter-decor-{{ dec.kind }}" style="top:{{ dec.top }}; left:{{ dec.left }}; transform: rotate({{ dec.rot }}deg); z-index:{{ dec.z }};">
+      <img src="{{ dec.img }}" alt="">
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endmacro %}
+
 {% for pg in pages %}
   {% if pg.type == 'cover' %}
   <section class="page cover">
-    <div class="bg"><img src="{{ pg.bg }}"></div>
+    {{ page_embellishments(pg) }}
+    <div class="bg">
+      <div class="hero-polaroid"><img src="{{ pg.bg }}"></div>
+    </div>
     <div class="scrim"></div>
     <div class="title-block">
       {% if pg.kicker %}<div class="kicker">{{ pg.kicker }}</div>{% endif %}
@@ -33,6 +56,7 @@
 
   {% elif pg.type == 'dedication' %}
   <section class="page dedication">
+    {{ page_embellishments(pg) }}
     <div class="trim"><div class="safe">
       <div class="flourish">{{ flourish_svg }}</div>
       <div class="body">{{ pg.body }}</div>
@@ -43,6 +67,7 @@
 
   {% elif pg.type == 'cast' %}
   <section class="page cast">
+    {{ page_embellishments(pg) }}
     <div class="trim"><div class="safe">
       <div class="kicker">The Cast</div>
       <h2>{{ pg.title }}</h2>
@@ -62,8 +87,9 @@
 
   {% elif pg.type == 'year-divider' %}
   <section class="page year-divider">
+    {{ page_embellishments(pg) }}
     <div class="trim"><div class="safe">
-      <div class="left">
+      <div class="left" data-year="{{ pg.year }}">
         <span class="kicker">The Story of Us</span>
         <div class="numeral">{{ pg.year }}</div>
         {% if pg.title %}<h2>{{ pg.title }}</h2>{% endif %}
@@ -121,17 +147,31 @@
       <div class="scatter-stage">
         {% if pg.year_tag %}<div class="scatter-year">{{ pg.year_tag }}</div>{% endif %}
         {% for it in pg.cells %}
+        {% if it.edge_shadow %}
+        <div class="scatter-photo-slot" style="top:{{ it.top }}; left:{{ it.left }}; width:{{ it.width }}; height:{{ it.height }}; z-index:{{ it.z }};">
+          <div class="scatter-photo-matte"></div>
+          <div class="scatter-photo" style="transform: rotate({{ it.rot }}deg);">
+            <div class="photo"><img src="{{ it.img }}"></div>
+          </div>
+        </div>
+        {% else %}
         <div class="scatter-photo" style="top:{{ it.top }}; left:{{ it.left }}; width:{{ it.width }}; height:{{ it.height }}; transform: rotate({{ it.rot }}deg); z-index:{{ it.z }};">
           <div class="photo"><img src="{{ it.img }}"></div>
         </div>
+        {% endif %}
         {% if it.caption %}
-        <div class="scatter-caption" style="top:{{ it.cap_top }}; left:{{ it.cap_left }}; z-index:{{ it.z + 10 }};">{{ it.caption }}</div>
+        <div class="scatter-caption" style="top:{{ it.cap_top }}; left:{{ it.cap_left }};">{{ it.caption }}</div>
         {% endif %}
         {% if it.clipart %}
         <div class="scatter-clipart" style="top:{{ it.clip_top }}; left:{{ it.clip_left }}; z-index:{{ it.z + 5 }};">
           <img src="{{ it.clipart }}">
         </div>
         {% endif %}
+        {% endfor %}
+        {% for dec in pg.decorations %}
+        <div class="scatter-decor scatter-decor-{{ dec.kind }}" style="top:{{ dec.top }}; left:{{ dec.left }}; transform: rotate({{ dec.rot }}deg); z-index:{{ dec.z }};">
+          <img src="{{ dec.img }}" alt="">
+        </div>
         {% endfor %}
       </div>
     </div>

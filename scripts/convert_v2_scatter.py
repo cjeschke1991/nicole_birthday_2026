@@ -37,7 +37,7 @@ def infer_theme(photo: dict) -> str:
 
 
 def chunk_photos(photos: list[dict]) -> list[list[dict]]:
-    """Split into groups of 3–5 for scatter pages."""
+    """Split into groups of up to 3 for scatter pages (room for captions)."""
     if not photos:
         return []
     chunks: list[list[dict]] = []
@@ -45,20 +45,17 @@ def chunk_photos(photos: list[dict]) -> list[list[dict]]:
     n = len(photos)
     while i < n:
         remaining = n - i
-        if remaining <= 5:
+        if remaining <= 3:
             chunks.append(photos[i:])
             break
-        if remaining == 6:
-            chunks.extend([photos[i : i + 3], photos[i + 3 : i + 6]])
+        if remaining == 4:
+            chunks.extend([photos[i : i + 2], photos[i + 2 : i + 4]])
             break
-        if remaining == 7:
-            chunks.extend([photos[i : i + 4], photos[i + 4 : i + 7]])
+        if remaining == 5:
+            chunks.extend([photos[i : i + 3], photos[i + 3 : i + 5]])
             break
-        if remaining == 8:
-            chunks.extend([photos[i : i + 4], photos[i + 4 : i + 8]])
-            break
-        chunks.append(photos[i : i + 5])
-        i += 5
+        chunks.append(photos[i : i + 3])
+        i += 3
     return chunks
 
 
