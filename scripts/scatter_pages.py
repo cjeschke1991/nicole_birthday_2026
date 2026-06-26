@@ -10,6 +10,17 @@ import common
 
 ROOT = common.ROOT
 
+_SCATTER_RECIPES_PATH = Path(__file__).parent / "scatter_recipes.json"
+
+
+def scatter_max_photos_per_page(recipe: str) -> int:
+    """Max photos on one scatter page (Figma slot count, capped at 3)."""
+    if not _SCATTER_RECIPES_PATH.is_file():
+        return 3
+    raw = json.loads(_SCATTER_RECIPES_PATH.read_text())
+    slots = raw.get(recipe, raw.get("scatter-a", []))
+    return min(3, len(slots) if slots else 3)
+
 
 @dataclass
 class ScatterPage:
@@ -33,7 +44,8 @@ def iter_scatter_pages(story: dict) -> list[ScatterPage]:
                 continue
             recipe = layout
             group: list[dict] = []
-            while i < n and photos[i].get("layout") == recipe and len(group) < 3:
+            max_photos = scatter_max_photos_per_page(recipe)
+            while i < n and photos[i].get("layout") == recipe and len(group) < max_photos:
                 group.append(photos[i])
                 i += 1
             seq += 1

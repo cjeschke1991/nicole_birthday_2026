@@ -134,12 +134,21 @@
       "recipe": "scatter-b",
       "photos": [
         "2019/2019-06-07_IMG_0756_28aa9a.jpg",
-        "2019/2019-06-08_IMG_2253_f55d04.jpg",
-        "2019/2019-06-05_IMG_2186_deab88.jpg"
+        "2019/2019-06-08_IMG_2253_f55d04.jpg"
       ],
       "captions": [
         "Sun, sand, and newlyweds.",
-        "Paradise, party of two.",
+        "Paradise, party of two."
+      ]
+    },
+    {
+      "id": "2019-03",
+      "year": 2019,
+      "recipe": "scatter-b",
+      "photos": [
+        "2019/2019-06-05_IMG_2186_deab88.jpg"
+      ],
+      "captions": [
         "Morning walks by the water."
       ]
     },
@@ -190,17 +199,26 @@
       "recipe": "scatter-b",
       "photos": [
         "covers/cooper_coming_home.jpg",
-        "2022/2022-09-12_IMG_0322_93b682.jpg",
-        "2022/2022-05-06_IMG_9167_1982db.jpg"
+        "2022/2022-09-12_IMG_0322_93b682.jpg"
       ],
       "captions": [
         "Welcome home, Cooper.",
-        "Puppy's first ride home.",
-        "Out on the water."
+        "Puppy's first ride home."
       ]
     },
     {
       "id": "2022-02",
+      "year": 2022,
+      "recipe": "scatter-b",
+      "photos": [
+        "2022/2022-05-06_IMG_9167_1982db.jpg"
+      ],
+      "captions": [
+        "Out on the water."
+      ]
+    },
+    {
+      "id": "2022-03",
       "year": 2022,
       "recipe": "scatter-c",
       "photos": [
@@ -218,17 +236,26 @@
       "recipe": "scatter-d",
       "photos": [
         "covers/connor_welcome.jpg",
-        "covers/connor_welcome.jpg",
-        "2023/2023-10-24_IMG_3238_d928f3.jpg"
+        "covers/connor_welcome.jpg"
       ],
       "captions": [
         "Bringing Connor home.",
-        "Hello, Connor. Born October 15, 2023.",
-        "Tiny and brand new."
+        "Hello, Connor. Born October 15, 2023."
       ]
     },
     {
       "id": "2023-02",
+      "year": 2023,
+      "recipe": "scatter-d",
+      "photos": [
+        "2023/2023-10-24_IMG_3238_d928f3.jpg"
+      ],
+      "captions": [
+        "Tiny and brand new."
+      ]
+    },
+    {
+      "id": "2023-03",
       "year": 2023,
       "recipe": "scatter-a",
       "photos": [
@@ -246,17 +273,26 @@
       "recipe": "scatter-b",
       "photos": [
         "covers/wrigley_family_2024.jpg",
-        "2024/2024-03-31_IMG_5393_ea1472.jpg",
-        "2024/2024-07-05_IMG_1332_e6e34f.jpg"
+        "2024/2024-03-31_IMG_5393_ea1472.jpg"
       ],
       "captions": [
         "Connor's first Wrigley game.",
-        "Easter morning.",
-        "Ballgame with the crew."
+        "Easter morning."
       ]
     },
     {
       "id": "2024-02",
+      "year": 2024,
+      "recipe": "scatter-b",
+      "photos": [
+        "2024/2024-07-05_IMG_1332_e6e34f.jpg"
+      ],
+      "captions": [
+        "Ballgame with the crew."
+      ]
+    },
+    {
+      "id": "2024-03",
       "year": 2024,
       "recipe": "scatter-c",
       "photos": [
@@ -274,17 +310,26 @@
       "recipe": "scatter-d",
       "photos": [
         "2025/2025-07-17_IMG_0952_428068.jpg",
-        "2025/2025-01-17_IMG_3820_1f32bd.jpg",
-        "2025/2025-05-04_IMG_9896_b15c03.jpg"
+        "2025/2025-01-17_IMG_3820_1f32bd.jpg"
       ],
       "captions": [
         "Hello, Hailey. Born July 17, 2025.",
-        "Adventures, party of three.",
-        "A day at the zoo."
+        "Adventures, party of three."
       ]
     },
     {
       "id": "2025-02",
+      "year": 2025,
+      "recipe": "scatter-d",
+      "photos": [
+        "2025/2025-05-04_IMG_9896_b15c03.jpg"
+      ],
+      "captions": [
+        "A day at the zoo."
+      ]
+    },
+    {
+      "id": "2025-03",
       "year": 2025,
       "recipe": "scatter-a",
       "photos": [
@@ -304,17 +349,26 @@
       "recipe": "scatter-b",
       "photos": [
         "2026/2026-01-18_IMG_4105_6e56d8.jpg",
-        "2026/2026-01-22_IMG_4142_17182d.jpg",
-        "2026/2026-01-25_IMG_4165_30bd5c.jpg"
+        "2026/2026-01-22_IMG_4142_17182d.jpg"
       ],
       "captions": [
         "Brother and sister.",
-        "Connor and Zoa, partners in crime.",
-        "Hailey's first game."
+        "Connor and Zoa, partners in crime."
       ]
     },
     {
       "id": "2026-02",
+      "year": 2026,
+      "recipe": "scatter-b",
+      "photos": [
+        "2026/2026-01-25_IMG_4165_30bd5c.jpg"
+      ],
+      "captions": [
+        "Hailey's first game."
+      ]
+    },
+    {
+      "id": "2026-03",
       "year": 2026,
       "recipe": "scatter-c",
       "photos": [

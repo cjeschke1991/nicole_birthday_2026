@@ -24,6 +24,7 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import common
+from scatter_pages import scatter_max_photos_per_page
 from common import (
     ASSETS_DIR, DEFAULT_VERSION, PLAYWRIGHT_DIR, VersionPaths,
     list_versions, resolve_cover, resolve_photo, set_version,
@@ -94,18 +95,9 @@ DECOR_POOL = ("washi-pink", "washi-blue", "star-burst", "heart-tiny")
 
 
 def scatter_recipe_slots(recipe: str, count: int) -> list[tuple]:
-    """Return `count` slots; pad from defaults when Figma export is incomplete."""
+    """Return up to `count` slots from the Figma recipe (no default padding)."""
     slots = list(SCATTER_RECIPES.get(recipe, SCATTER_RECIPES["scatter-a"]))
-    if len(slots) >= count:
-        return slots[:count]
-    fallback = _SCATTER_RECIPES_DEFAULT.get(recipe, _SCATTER_RECIPES_DEFAULT["scatter-a"])
-    print(
-        f"  WARNING: {recipe} has {len(slots)} Figma slot(s) but page needs {count}; "
-        f"using built-in defaults for missing photo(s)",
-    )
-    for i in range(len(slots), count):
-        slots.append(tuple(fallback[i] if i < len(fallback) else fallback[-1]))
-    return slots
+    return slots[:count]
 
 
 def _load_scatter_decorations() -> dict:
@@ -524,8 +516,9 @@ def layout_year(yr: dict, photos: list[dict], vp: VersionPaths) -> list[dict]:
 
         elif layout.startswith("scatter"):
             recipe = layout
+            max_photos = scatter_max_photos_per_page(recipe)
             group = []
-            while i < n and photos[i].get("layout") == recipe and len(group) < 3:
+            while i < n and photos[i].get("layout") == recipe and len(group) < max_photos:
                 group.append(photos[i]); i += 1
             if group:
                 year = int(yr["year"])
@@ -561,6 +554,7 @@ def make_collage(yr: dict, group: list[dict], vp: VersionPaths) -> dict:
 def make_scatter(yr: dict, group: list[dict], recipe: str, vp: VersionPaths,
                  page_id: str = "") -> dict:
     slots = scatter_recipe_slots(recipe, len(group))
+    group = group[: len(slots)]
     photo_rects = [_rotated_photo_rect(*slots[i][:5]) for i in range(len(group))]
     placed_captions: list[tuple] = []
     items = []
